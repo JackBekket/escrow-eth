@@ -2,6 +2,8 @@ pragma solidity ^0.4.2;
 
 /**
 
+author-Sergey Ponomarev (JackBekket)
+
 buyer = initiator
 seller = executor
 
