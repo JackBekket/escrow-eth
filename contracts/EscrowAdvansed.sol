@@ -20,7 +20,6 @@ contract EscrowAdvansed {
       uint lockedFunds;
       uint frozenFunds;
       uint64 frozenTime;
-      uint16 count;
       bool buyerNo;
       bool sellerNo;
   }
@@ -74,13 +73,13 @@ uint16 constant internal Canceled = 2;
   uint16 public status;
 
   //how many for sale - probably deprecate it
-  uint16 public count;
+//  uint16 public count;
 
   //price per item
-  uint public price;
+//  uint public price;
 
-  uint16 public availableCount;
-  uint16 public pendingCount;
+//  uint16 public availableCount;
+//  uint16 public pendingCount;
 //---------------------------------------------
 
 
@@ -97,7 +96,7 @@ uint16 constant internal Canceled = 2;
   uint public logsCount = 0;
 
   event LogDebug(string message);
-  event LogEvent(uint indexed lockId, string dataInfo, uint indexed version, uint16 eventType, address indexed sender, uint count, uint payment);
+  event LogEvent(uint indexed lockId, string dataInfo, uint indexed version, uint16 eventType, address indexed sender, uint payment);
 //------------------------------------------------
 
 
@@ -118,10 +117,11 @@ uint16 constant internal Canceled = 2;
   //modules
 
 
-function EscrowAdvansed(address _arbiter, uint _freezePeriod, uint _feePromille, uint _rewardPromille,
-                      uint16 _count, uint _price){
+function EscrowAdvansed(address _arbiter, uint _freezePeriod, uint _feePromille, uint _rewardPromille){
 
       seller = msg.sender;
+
+
 
       // all variables are always initialized to 0, save gas
 
@@ -138,16 +138,18 @@ function EscrowAdvansed(address _arbiter, uint _freezePeriod, uint _feePromille,
 //deal related --just some thoughts
 
       status = Available;
-      count = _count;
-      price = _price;
+  //    count = _count;
+  //    price = _price;
 
-      availableCount = count;
+  //    availableCount = count;
 //-----------------------------------
 
     //end of constructor
   }
 //----------------------------------------
 
+
+// CONTRACT FUNCTIONS
 
 // - for destruction contract.
   function kill() onlyOwner {
@@ -178,6 +180,63 @@ function EscrowAdvansed(address _arbiter, uint _freezePeriod, uint _feePromille,
       }
       atomicLock = false;
   }
+
+
+  //escrow API
+
+
+
+//deals API
+
+//add new description to the deal - deprecate?
+function addDescription(string _dataInfo, uint _version) onlyOwner {
+
+    //Accept order to event log
+    LogEvent(0, _dataInfo, _version, Description, msg.sender, 0);
+}
+
+
+//Start deal with escrow
+function start(uint _lockId, string _dataInfo, uint _version) payable {
+
+    //reject money transfers for bad status
+
+    if(status != Available) throw;
+
+    if(feePromille > 1000) throw;
+    if(rewardPromille > 1000) throw;
+    if((feePromille + rewardPromille) > 1000) throw;
+
+    //create default EscrowInfo struct or access existing
+    EscrowInfo info = escrows[_lockId];
+
+    //lock only once for a given id
+    if(info.lockedFunds > 0) throw;
+
+    //lock funds
+
+    uint fee = (msg.value * feePromille) / 1000;
+    //limit fees
+    if(fee > msg.value) throw;
+
+    uint funds = (msg.value - fee);
+    feeFunds += fee;
+    totalEscrows += 1;
+
+    // buyer init escrow deal.
+    info.buyer = msg.sender;
+    info.lockedFunds = funds;
+    info.frozenFunds = 0;
+    info.buyerNo = false;
+    info.sellerNo = false;
+
+
+  //  pendingCount += _count;
+    buyers[msg.sender] = true;
+
+    //Start order to event log
+    LogEvent(_lockId, _dataInfo, _version, Buy, msg.sender, msg.value);
+}
 
 
 //end of contract
