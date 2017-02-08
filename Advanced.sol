@@ -248,12 +248,48 @@ function accept(uint _lockId, string _dataInfo, uint _version) onlyOwner {
 
     EscrowInfo info = escrows[_lockId];
 
-// Here is could be rule for auto-accept or auto-throw
+  /**
+  Here is 'if' for accept rule
+
+  **/
 
 
-//Accept order to event log
+
+    //Accept order to event log
     LogEvent(_lockId, _dataInfo, _version, Accept, msg.sender, info.lockedFunds);
 }
+
+//Reject functions means that seller denied start deal from buyer.
+function reject(uint _lockId, string _dataInfo, uint _version) onlyOwner {
+
+    EscrowInfo info = escrows[_lockId];
+
+    /**
+    seller reject rule
+
+    **/
+
+
+
+    //send money back
+    // TODO - write logic for escrow itself. 'yes' function is for prototype
+  //  yes(_lockId, _dataInfo, _version);
+
+    //Reject order to event log
+    //HACK: "yes" call above may fail and this event will be non-relevant. Do not rely on it.
+    LogEvent(_lockId, _dataInfo, _version, Reject, msg.sender, info.lockedFunds);
+}
+
+//Cancel stop all new deals.
+function cancel(string _dataInfo, uint _version) onlyOwner {
+
+    //Canceled status
+    status = Canceled;
+
+    //Cancel order to event log
+    LogEvent(0, _dataInfo, _version, Cancel, msg.sender, 0);
+}
+
 
 
 
