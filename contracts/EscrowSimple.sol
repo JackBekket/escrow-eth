@@ -1,5 +1,19 @@
 pragma solidity ^0.4.2;
 
+/**
+
+buyer = initiator
+seller = executor
+
+Simple Escrow service without hard-modifiers and state VALUES
+
+
+
+
+
+
+**/
+
 
 contract EscrowSimple {
 
