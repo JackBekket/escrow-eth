@@ -350,14 +350,365 @@ var SolidityEvent = require("web3/lib/web3/event.js");
   "default": {
     "abi": [
       {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "escrows",
+        "outputs": [
+          {
+            "name": "buyer",
+            "type": "address"
+          },
+          {
+            "name": "lockedFunds",
+            "type": "uint256"
+          },
+          {
+            "name": "frozenFunds",
+            "type": "uint256"
+          },
+          {
+            "name": "frozenTime",
+            "type": "uint64"
+          },
+          {
+            "name": "count",
+            "type": "uint16"
+          },
+          {
+            "name": "buyerNo",
+            "type": "bool"
+          },
+          {
+            "name": "sellerNo",
+            "type": "bool"
+          }
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "count",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint16"
+          }
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "seller",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "freezePeriod",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "status",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint16"
+          }
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "rewardPromille",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "totalEscrows",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "feeFunds",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "name": "buyers",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "availableCount",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint16"
+          }
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "price",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "contentCount",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "logsCount",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "feePromille",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "pendingCount",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint16"
+          }
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "arbiter",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
         "inputs": [],
         "payable": false,
         "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "name": "message",
+            "type": "string"
+          }
+        ],
+        "name": "LogDebug",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "name": "lockId",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "name": "dataInfo",
+            "type": "string"
+          },
+          {
+            "indexed": true,
+            "name": "version",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "name": "eventType",
+            "type": "uint16"
+          },
+          {
+            "indexed": true,
+            "name": "sender",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "name": "count",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "name": "payment",
+            "type": "uint256"
+          }
+        ],
+        "name": "LogEvent",
+        "type": "event"
       }
     ],
-    "unlinked_binary": "0x6060604052346000575b5b5b60358060186000396000f30060606040525b60005600a165627a7a72305820a187afcc38902de89ddb4ee741d39e69c6f044c596d1dcfa9ef10906cd32ea9c0029",
-    "events": {},
-    "updated_at": 1486568402537
+    "unlinked_binary": "0x60606040526000600255600060035534610000575b5b5b610468806100256000396000f300606060405236156100ca5763ffffffff60e060020a600035041663012f52ee81146100cf57806306661abd1461013257806308551a53146101565780630a3cb6631461017f578063200d2ed21461019e578063309e21a9146101c257806363ee7c8d146101e15780636fd637281461020057806397a993aa1461021f5780639e05c1181461024a578063a035b1fe1461026e578063cc4596961461028d578063cd1f8393146102ac578063dc3ef685146102cb578063ea70b4af146102ea578063fe25e00a1461030e575b610000565b34610000576100df600435610337565b60408051600160a060020a03909816885260208801969096528686019490945267ffffffffffffffff909216606086015261ffff166080850152151560a0840152151560c0830152519081900360e00190f35b346100005761013f6103a8565b6040805161ffff9092168252519081900360200190f35b34610000576101636103b8565b60408051600160a060020a039092168252519081900360200190f35b346100005761018c6103c7565b60408051918252519081900360200190f35b346100005761013f6103cd565b6040805161ffff9092168252519081900360200190f35b346100005761018c6103d7565b60408051918252519081900360200190f35b346100005761018c6103dd565b60408051918252519081900360200190f35b346100005761018c6103e3565b60408051918252519081900360200190f35b346100005761018c600160a060020a03600435166103e9565b60408051918252519081900360200190f35b346100005761013f6103fb565b6040805161ffff9092168252519081900360200190f35b346100005761018c610405565b60408051918252519081900360200190f35b346100005761018c61040b565b60408051918252519081900360200190f35b346100005761018c610411565b60408051918252519081900360200190f35b346100005761018c610417565b60408051918252519081900360200190f35b346100005761013f61041d565b6040805161ffff9092168252519081900360200190f35b346100005761016361042d565b60408051600160a060020a039092168252519081900360200190f35b6009602052600090815260409020805460018201546002830154600390930154600160a060020a0390921692909167ffffffffffffffff81169061ffff680100000000000000008204169060ff6a010000000000000000000082048116916b01000000000000000000000090041687565b600a5462010000900461ffff1681565b600054600160a060020a031681565b60045481565b600a5461ffff1681565b60065481565b60085481565b60075481565b600d6020526000908152604090205481565b600c5461ffff1681565b600b5481565b60025481565b60035481565b60055481565b600c5462010000900461ffff1681565b600154600160a060020a0316815600a165627a7a72305820877d3b2e3e9defddd36cd33940f606d9e9e5963ec154129409cb4abfa63d63bb0029",
+    "events": {
+      "0xd44da6836c8376d1693e8b9cacf1c39b9bed3599164ad6d8e60902515f83938e": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "name": "message",
+            "type": "string"
+          }
+        ],
+        "name": "LogDebug",
+        "type": "event"
+      },
+      "0xe9a88fc67f5ad8c6d6e6fb2832af9558ebc4c2f6395337eec27c17f1ee9ebc1f": {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "name": "lockId",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "name": "dataInfo",
+            "type": "string"
+          },
+          {
+            "indexed": true,
+            "name": "version",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "name": "eventType",
+            "type": "uint16"
+          },
+          {
+            "indexed": true,
+            "name": "sender",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "name": "count",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "name": "payment",
+            "type": "uint256"
+          }
+        ],
+        "name": "LogEvent",
+        "type": "event"
+      }
+    },
+    "updated_at": 1486569283839
   }
 };
 
