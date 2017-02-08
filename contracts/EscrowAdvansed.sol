@@ -4,8 +4,8 @@ pragma solidity ^0.4.0;
 /**
 author-Sergey Ponomarev (JackBekket)
 
-seller = initiator
-buyer = executor
+seller = deployer of contract, executor of DEAL
+buyer = user of contract, initiator of DEAL.
 logic - seller sell something (e.g some service), buyer is ready to buy.
 
 TODO - clean comments,clean version&dataibfo.
@@ -241,6 +241,56 @@ function start(uint _lockId, string _dataInfo, uint _version) payable {
     //Start order to event log
     LogEvent(_lockId, _dataInfo, _version, Start, msg.sender, msg.value);
 }
+
+// Accept funtion is function for seller - he confirm beginning of deal.
+//onlyOwner means only Seller.
+function accept(uint _lockId, string _dataInfo, uint _version) onlyOwner {
+
+    EscrowInfo info = escrows[_lockId];
+
+  /**
+  Here is 'if' for accept rule
+
+  **/
+
+
+
+    //Accept order to event log
+    LogEvent(_lockId, _dataInfo, _version, Accept, msg.sender, info.lockedFunds);
+}
+
+//Reject functions means that seller denied start deal from buyer.
+function reject(uint _lockId, string _dataInfo, uint _version) onlyOwner {
+
+    EscrowInfo info = escrows[_lockId];
+
+    /**
+    seller reject rule
+
+    **/
+
+
+
+    //send money back
+    // TODO - write logic for escrow itself. 'yes' function is for prototype
+  //  yes(_lockId, _dataInfo, _version);
+
+    //Reject order to event log
+    //HACK: "yes" call above may fail and this event will be non-relevant. Do not rely on it.
+    LogEvent(_lockId, _dataInfo, _version, Reject, msg.sender, info.lockedFunds);
+}
+
+//Cancel stop all new deals.
+function cancel(string _dataInfo, uint _version) onlyOwner {
+
+    //Canceled status
+    status = Canceled;
+
+    //Cancel order to event log
+    LogEvent(0, _dataInfo, _version, Cancel, msg.sender, 0);
+}
+
+
 
 
 //end of contract
