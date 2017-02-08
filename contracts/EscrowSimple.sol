@@ -2,7 +2,7 @@ pragma solidity ^0.4.2;
 
 /**
 
-author-Sergey Ponomarev (JackBekket)
+/// @author SergeyPonomarev(JackBekket)
 
 buyer = initiator
 seller = executor

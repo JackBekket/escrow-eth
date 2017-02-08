@@ -2,7 +2,7 @@ pragma solidity ^0.4.0;
 
 
 /**
-author-Sergey Ponomarev (JackBekket)
+/// @author SergeyPonomarev(JackBekket)
 
 seller = deployer of contract, executor of DEAL
 buyer = user of contract, initiator of DEAL.
