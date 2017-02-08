@@ -21,12 +21,12 @@ logic - seller sell something (e.g some service), buyer is ready to buy.
 
 
 
-contract EscrowAdvanced {
+contract EscrowAdvansed {
 
 
 
 
-function EscrowAdvanced(){
+function EscrowAdvansed(){
 
 
 

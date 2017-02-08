@@ -231,13 +231,13 @@ var SolidityEvent = require("web3/lib/web3/event.js");
 
   Contract.new = function() {
     if (this.currentProvider == null) {
-      throw new Error("EscrowSimple error: Please call setProvider() first before calling new().");
+      throw new Error("EscrowAdvansed error: Please call setProvider() first before calling new().");
     }
 
     var args = Array.prototype.slice.call(arguments);
 
     if (!this.unlinked_binary) {
-      throw new Error("EscrowSimple error: contract binary not set. Can't deploy new instance.");
+      throw new Error("EscrowAdvansed error: contract binary not set. Can't deploy new instance.");
     }
 
     var regex = /__[^_]+_+/g;
@@ -256,7 +256,7 @@ var SolidityEvent = require("web3/lib/web3/event.js");
         return name != arr[index + 1];
       }).join(", ");
 
-      throw new Error("EscrowSimple contains unresolved libraries. You must deploy and link the following libraries before you can deploy a new version of EscrowSimple: " + unlinked_libraries);
+      throw new Error("EscrowAdvansed contains unresolved libraries. You must deploy and link the following libraries before you can deploy a new version of EscrowAdvansed: " + unlinked_libraries);
     }
 
     var self = this;
@@ -297,7 +297,7 @@ var SolidityEvent = require("web3/lib/web3/event.js");
 
   Contract.at = function(address) {
     if (address == null || typeof address != "string" || address.length != 42) {
-      throw new Error("Invalid address passed to EscrowSimple.at(): " + address);
+      throw new Error("Invalid address passed to EscrowAdvansed.at(): " + address);
     }
 
     var contract_class = this.web3.eth.contract(this.abi);
@@ -308,7 +308,7 @@ var SolidityEvent = require("web3/lib/web3/event.js");
 
   Contract.deployed = function() {
     if (!this.address) {
-      throw new Error("Cannot find deployed address: EscrowSimple not deployed or address not set.");
+      throw new Error("Cannot find deployed address: EscrowAdvansed not deployed or address not set.");
     }
 
     return this.at(this.address);
@@ -350,91 +350,14 @@ var SolidityEvent = require("web3/lib/web3/event.js");
   "default": {
     "abi": [
       {
-        "constant": true,
         "inputs": [],
-        "name": "seller",
-        "outputs": [
-          {
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "payable": false,
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [],
-        "name": "getBalance",
-        "outputs": [
-          {
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "payable": false,
-        "type": "function"
-      },
-      {
-        "constant": false,
-        "inputs": [],
-        "name": "payoutToSeller",
-        "outputs": [],
-        "payable": false,
-        "type": "function"
-      },
-      {
-        "constant": false,
-        "inputs": [],
-        "name": "refundToBuyer",
-        "outputs": [],
-        "payable": false,
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [],
-        "name": "buyer",
-        "outputs": [
-          {
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "payable": false,
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [],
-        "name": "arbiter",
-        "outputs": [
-          {
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "payable": false,
-        "type": "function"
-      },
-      {
-        "inputs": [
-          {
-            "name": "_seller",
-            "type": "address"
-          },
-          {
-            "name": "_arbiter",
-            "type": "address"
-          }
-        ],
         "payable": false,
         "type": "constructor"
       }
     ],
-    "unlinked_binary": "0x606060405234610000576040516040806102c98339810160405280516020909101515b60008054600160a060020a03338116600160a060020a0319928316179092556001805485841690831617905560028054928416929091169190911790555b50505b610257806100726000396000f3006060604052361561005c5763ffffffff60e060020a60003504166308551a53811461006157806312065fe01461008a57806329bb3c89146100a95780634bd7d081146100b85780637150d8ae146100c7578063fe25e00a146100f0575b610000565b346100005761006e610119565b60408051600160a060020a039092168252519081900360200190f35b3461000057610097610128565b60408051918252519081900360200190f35b34610000576100b6610137565b005b34610000576100b66101a0565b005b346100005761006e61020d565b60408051600160a060020a039092168252519081900360200190f35b346100005761006e61021c565b60408051600160a060020a039092168252519081900360200190f35b600154600160a060020a031681565b600160a060020a033016315b90565b60005433600160a060020a0390811691161480610162575060025433600160a060020a039081169116145b1561019c57600154604051600160a060020a039182169130163180156108fc02916000818181858888f19350505050151561019c57610000565b5b5b565b60015433600160a060020a03908116911614806101cb575060025433600160a060020a039081169116145b1561019c5760008054604051600160a060020a0391821692309092163180156108fc0292909190818181858888f19350505050151561019c57610000565b5b5b565b600054600160a060020a031681565b600254600160a060020a0316815600a165627a7a72305820cad9913882d63c9b0a8273336d4900218e9903300f3b844d322f7da3207a25e60029",
+    "unlinked_binary": "0x6060604052346000575b5b5b60358060186000396000f30060606040525b60005600a165627a7a72305820a187afcc38902de89ddb4ee741d39e69c6f044c596d1dcfa9ef10906cd32ea9c0029",
     "events": {},
-    "updated_at": 1486568402542
+    "updated_at": 1486568402537
   }
 };
 
@@ -519,7 +442,7 @@ var SolidityEvent = require("web3/lib/web3/event.js");
     Contract.links[name] = address;
   };
 
-  Contract.contract_name   = Contract.prototype.contract_name   = "EscrowSimple";
+  Contract.contract_name   = Contract.prototype.contract_name   = "EscrowAdvansed";
   Contract.generated_with  = Contract.prototype.generated_with  = "3.2.0";
 
   // Allow people to opt-in to breaking changes now.
@@ -559,6 +482,6 @@ var SolidityEvent = require("web3/lib/web3/event.js");
   } else {
     // There will only be one version of this contract in the browser,
     // and we can use that.
-    window.EscrowSimple = Contract;
+    window.EscrowAdvansed = Contract;
   }
 })();
