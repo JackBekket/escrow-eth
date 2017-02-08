@@ -13,7 +13,7 @@ logic - seller sell something (e.g some service), buyer is ready to buy.
 contract EscrowAdvansed {
 
 
-  // Info about specific EscrowCase
+  // Info about specific EscrowCase (STATE MASSIVE)
   struct EscrowInfo {
 
       address buyer;
@@ -44,20 +44,16 @@ contract EscrowAdvansed {
   //seller/owner of the contract
   address public seller;
 
-  //escrow related
+//ECROW RELATED-----------------------------------------------------------------
 
   address public arbiter;
 
-
-  //event counters
-  uint public contentCount = 0;
-  uint public logsCount = 0;
-
-
-
+//TIMELOCK
   uint public freezePeriod;
+
   //each lock fee in promilles.
   uint public feePromille;
+
   //reward in promilles. promille = percent * 10, eg 1,5% reward = 15 rewardPromille
   uint public rewardPromille;
 
@@ -66,9 +62,15 @@ contract EscrowAdvansed {
 
   mapping (uint => EscrowInfo) public escrows;
 
-  //goods related
+//DEAL RELATED-------------------------------------
 
-  //status of the goods  - probably deprecate it
+//enum DealStatus
+uint16 constant internal None = 0;
+uint16 constant internal Available = 1;
+uint16 constant internal Canceled = 2;
+
+
+  //status of the deals  - probably deprecate it
   uint16 public status;
 
   //how many for sale - probably deprecate it
@@ -79,17 +81,27 @@ contract EscrowAdvansed {
 
   uint16 public availableCount;
   uint16 public pendingCount;
+//---------------------------------------------
+
 
   // array of buyers.
   mapping (address => uint) public buyers;
 
-  uint16 atomicLock;
+  // изолятор ячейки
+  bool private atomicLock;
 
-  //events
+//EVENTS-----------------------------------------------------------------------------
+
+  //event counters
+  uint public contentCount = 0;
+  uint public logsCount = 0;
 
   event LogDebug(string message);
   event LogEvent(uint indexed lockId, string dataInfo, uint indexed version, uint16 eventType, address indexed sender, uint count, uint payment);
+//------------------------------------------------
 
+
+//--MODIFIERS---------------------------
   modifier onlyOwner {
       if (msg.sender != seller)
         throw;
@@ -101,21 +113,72 @@ contract EscrowAdvansed {
         throw;
       _;
   }
-
+//---------------------------------------
 
   //modules
 
 
-function EscrowAdvansed(){
+function EscrowAdvansed(address _arbiter, uint _freezePeriod, uint _feePromille, uint _rewardPromille,
+                      uint16 _count, uint _price){
+
+      seller = msg.sender;
+
+      // all variables are always initialized to 0, save gas
 
 
+//ESCROW RELATED--------------
+
+      arbiter = _arbiter;
+      freezePeriod = _freezePeriod;
+      feePromille = _feePromille;
+      rewardPromille = _rewardPromille;
+
+//-----------------------------------------
+
+//deal related --just some thoughts
+
+      status = Available;
+      count = _count;
+      price = _price;
+
+      availableCount = count;
+//-----------------------------------
+
+    //end of constructor
+  }
+//----------------------------------------
 
 
+// - for destruction contract.
+  function kill() onlyOwner {
+
+      //do not allow killing contract with active escrows
+      if(totalEscrows > 0) {
+          LogDebug("totalEscrows > 0");
+          return;
+      }
+      //do not allow killing contract with unclaimed escrow fees
+      if(feeFunds > 0) {
+          LogDebug("feeFunds > 0");
+          return;
+      }
+      suicide(msg.sender);
+  }
 
 
+//safesend = safe withdraw.
+// PITFALL - probably need to change addr.call to addr.send ... ?
+  function safeSend(address addr, uint value) internal {
 
-}
+      if(atomicLock) throw;
+      atomicLock = true;
+      if (!(addr.call.gas(safeGas).value(value)())) {
+          atomicLock = false;
+          throw;
+      }
+      atomicLock = false;
+  }
 
 
-
+//end of contract
 }
