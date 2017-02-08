@@ -1,3 +1,6 @@
+pragma solidity ^0.4.2;
+
+
 contract EscrowSimple {
 
   //set variables
@@ -11,18 +14,18 @@ contract EscrowSimple {
     seller = _seller;
     arbiter = _arbiter;
   }
-  
+
   //make payment to seller
   function payoutToSeller() {
     if(msg.sender == buyer || msg.sender == arbiter) {
-      seller.send(this.balance);
+    if(!seller.send(this.balance)) throw;
     }
   }
 
   //refund transaction
   function refundToBuyer() {
     if(msg.sender == seller || msg.sender == arbiter) {
-      buyer.send(this.balance);
+    if(!buyer.send(this.balance)) throw;
     }
   }
 

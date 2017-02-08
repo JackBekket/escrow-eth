@@ -13,6 +13,7 @@ This is zeppeline deployment
   }
 **/
 
+deployer.deploy(EscrowSimple);
 
 
 
