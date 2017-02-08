@@ -1,5 +1,9 @@
 module.exports = function(deployer) {
-  deployer.deploy(ConvertLib);
-  deployer.autolink();
-  deployer.deploy(MetaCoin);
+  deployer.deploy(Ownable);
+  deployer.deploy(Claimable);
+  deployer.deploy(LimitBalance);
+  if(deployer.network == 'test'){
+    deployer.deploy(SecureTargetBounty);
+    deployer.deploy(InsecureTargetBounty);
+  }
 };
