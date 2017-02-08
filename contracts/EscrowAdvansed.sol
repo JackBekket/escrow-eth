@@ -84,7 +84,7 @@ uint16 constant internal Canceled = 2;
 
 
   // array of buyers.
-  mapping (address => uint) public buyers;
+  mapping (address => bool) public buyers;
 
   // изолятор ячейки
   bool private atomicLock;
