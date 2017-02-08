@@ -8,6 +8,9 @@ seller = initiator
 buyer = executor
 logic - seller sell something (e.g some service), buyer is ready to buy.
 
+TODO - clean comments,clean version&dataibfo.
+
+
 **/
 
 contract EscrowAdvansed {
@@ -29,7 +32,7 @@ contract EscrowAdvansed {
   uint constant safeGas = 25000;
 
   //enum EventTypes
-  uint16 constant internal Buy = 1;
+  uint16 constant internal Start = 1;
   uint16 constant internal Accept = 2;
   uint16 constant internal Reject = 3;
   uint16 constant internal Cancel = 4;
@@ -96,6 +99,7 @@ uint16 constant internal Canceled = 2;
   uint public logsCount = 0;
 
   event LogDebug(string message);
+  //TODO -clean version after job done.
   event LogEvent(uint indexed lockId, string dataInfo, uint indexed version, uint16 eventType, address indexed sender, uint payment);
 //------------------------------------------------
 
@@ -235,7 +239,7 @@ function start(uint _lockId, string _dataInfo, uint _version) payable {
     buyers[msg.sender] = true;
 
     //Start order to event log
-    LogEvent(_lockId, _dataInfo, _version, Buy, msg.sender, msg.value);
+    LogEvent(_lockId, _dataInfo, _version, Start, msg.sender, msg.value);
 }
 
 
