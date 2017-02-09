@@ -269,9 +269,62 @@ function EscrowAdvansed(address _arbiter, uint _freezePeriod, uint _feePromille,
           LogEvent(_lockId, _dataInfo, _version, Freeze, msg.sender, info.lockedFunds);
       }
 
+      //arbiter's decision on the case.
+      //arbiter can only decide when both buyer and seller voted NO
+      //arbiter decides on his own reward but not bigger than announced percentage (rewardPromille)
+      function arbYes(uint _lockId, address _who, uint _payment, string _dataInfo, uint _version) onlyArbiter {
+
+          EscrowInfo info = escrows[_lockId];
+
+          if(info.lockedFunds == 0) {
+              LogDebug("info.lockedFunds == 0");
+              return;
+          }
+          if(info.frozenFunds == 0) {
+              LogDebug("info.frozenFunds == 0");
+              return;
+          }
+
+          if(_who != seller && _who != info.buyer) {
+              LogDebug("_who != seller && _who != info.buyer");
+              return;
+          }
+          //requires both NO to arbitration
+          if(!info.buyerNo || !info.sellerNo) {
+              LogDebug("!info.buyerNo || !info.sellerNo");
+              return;
+          }
+
+          if(_payment > info.lockedFunds) {
+              LogDebug("_payment > info.lockedFunds");
+              return;
+          }
+          if(_payment > this.balance) {
+              //HACK: should not get here - funds cannot be unlocked in this case
+              LogDebug("_payment > this.balance");
+              return;
+          }
+
+          //limit payment
+          uint reward = (info.lockedFunds * rewardPromille) / 1000;
+          if(reward > (info.lockedFunds - _payment)) {
+              LogDebug("reward > (info.lockedFunds - _payment)");
+              return;
+          }
+
+          //send funds to the winner
+          safeSend(_who, _payment);
+
+          //send the rest as reward
+          info.lockedFunds -= _payment;
+          feeFunds += info.lockedFunds;
+          info.lockedFunds = 0;
+
+          LogEvent(_lockId, _dataInfo, _version, Resolved, msg.sender, _payment);
+      }
 
 
-      
+
 
 
 //------------------------------------------------------------------------------
