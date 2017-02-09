@@ -186,11 +186,53 @@ function EscrowAdvansed(address _arbiter, uint _freezePeriod, uint _feePromille,
   }
 
 
-  //escrow API
+  //ESCROW API------------------------------------------------------------------
+
+  //vote YES - immediately sends funds to the peer
+  function yes(uint _lockId, string _dataInfo, uint _version) {
+
+      EscrowInfo info = escrows[_lockId];
+
+      if(info.lockedFunds == 0) {
+          LogDebug("info.lockedFunds == 0");
+          return;
+      }
+      if(msg.sender != info.buyer && msg.sender != seller) {
+          LogDebug("msg.sender != info.buyer && msg.sender != seller");
+          return;
+      }
+
+      uint payment = info.lockedFunds;
+      if(payment > this.balance) {
+          //HACK: should not get here - funds cannot be unlocked in this case
+          LogDebug("payment > this.balance");
+          return;
+      }
+
+      if(msg.sender == info.buyer) {
+
+          //send funds to seller
+          safeSend(seller, payment);
+      } else if(msg.sender == seller) {
+
+          //send funds to buyer
+          safeSend(info.buyer, payment);
+      } else {
+          //HACK: should not get here
+          LogDebug("unknown msg.sender");
+          return;
+      }
+
+      //remove record from escrows
+      if(totalEscrows > 0) totalEscrows -= 1;
+      info.lockedFunds = 0;
+
+      LogEvent(_lockId, _dataInfo, _version, Unlock, msg.sender, payment);
+  }
 
 
 
-//deals API
+//DEALS API---------------------------------------------------------------------
 
 //add new description to the deal - deprecate?
 function addDescription(string _dataInfo, uint _version) onlyOwner {
@@ -265,8 +307,8 @@ function reject(uint _lockId, string _dataInfo, uint _version) onlyOwner {
 
 
     //send money back
-    // TODO - write logic for escrow itself. 'yes' function is for prototype
-  //  yes(_lockId, _dataInfo, _version);
+    
+    yes(_lockId, _dataInfo, _version);
 
     //Reject order to event log
     //HACK: "yes" call above may fail and this event will be non-relevant. Do not rely on it.
