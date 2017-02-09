@@ -209,6 +209,7 @@ function EscrowAdvansed(address _arbiter, uint _freezePeriod, uint _feePromille,
           return;
       }
 
+      //payload
       if(msg.sender == info.buyer) {
 
           //send funds to seller
@@ -230,7 +231,7 @@ function EscrowAdvansed(address _arbiter, uint _freezePeriod, uint _feePromille,
       LogEvent(_lockId, _dataInfo, _version, Unlock, msg.sender, payment);
   }
 
-
+//------------------------------------------------------------------------------
 
 //DEALS API---------------------------------------------------------------------
 
@@ -284,6 +285,8 @@ function start(uint _lockId, string _dataInfo, uint _version) payable {
     LogEvent(_lockId, _dataInfo, _version, Start, msg.sender, msg.value);
 }
 
+//DEAL  AUTO-FUNCTIONS----------------------------------------------------------
+
 // Accept funtion is function for seller - he confirm beginning of deal.
 //onlyOwner means only Seller.
 function accept(uint _lockId, string _dataInfo, uint _version) onlyOwner {
@@ -307,13 +310,14 @@ function reject(uint _lockId, string _dataInfo, uint _version) onlyOwner {
 
 
     //send money back
-    
+
     yes(_lockId, _dataInfo, _version);
 
     //Reject order to event log
     //HACK: "yes" call above may fail and this event will be non-relevant. Do not rely on it.
     LogEvent(_lockId, _dataInfo, _version, Reject, msg.sender, info.lockedFunds);
 }
+//-----------------------------------------------------------------------------
 
 //Cancel stop all new deals.
 function cancel(string _dataInfo, uint _version) onlyOwner {
