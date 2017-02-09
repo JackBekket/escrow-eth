@@ -28,7 +28,7 @@ contract EscrowAdvansed {
   }
 
 
-  uint constant arbitragePeriod = 30 days;
+  uint constant arbitrationPeriod = 30 days;
   uint constant safeGas = 25000;
 
   //enum EventTypes
@@ -337,7 +337,67 @@ function EscrowAdvansed(address _arbiter, uint _freezePeriod, uint _feePromille,
           feeFunds = 0;
       }
 
+      //allow buyer or seller to take timeouted funds.
+      //buyer can get funds if seller is silent and seller can get funds if buyer is silent (after freezePeriod)
+      //buyer can get back funds under arbitration if arbiter is silent (after arbitrationPeriod)
+      function getMoney(uint _lockId) {
 
+          EscrowInfo info = escrows[_lockId];
+
+          if(info.lockedFunds == 0) {
+              LogDebug("info.lockedFunds == 0");
+              return;
+          }
+          //HACK: this check is necessary since frozenTime == 0 at escrow creation
+          if(info.frozenFunds == 0) {
+              LogDebug("info.frozenFunds == 0");
+              return;
+          }
+
+          //timout for voting not over yet
+          if(now < (info.frozenTime + freezePeriod)) {
+              LogDebug("now < (info.frozenTime + freezePeriod)");
+              return;
+          }
+
+          uint payment = info.lockedFunds;
+          if(payment > this.balance) {
+              //HACK: should not get here - funds cannot be unlocked in this case
+              LogDebug("payment > this.balance");
+              return;
+          }
+
+          //both has voted - money is under arbitration
+          if(info.buyerNo && info.sellerNo) {
+
+              //arbitration timeout is not over yet
+              if(now < (info.frozenTime + freezePeriod + arbitrationPeriod)) {
+                  LogDebug("now < (info.frozenTime + freezePeriod + arbitrationPeriod)");
+                  return;
+              }
+
+              //arbiter was silent so redeem the funds to the buyer
+              safeSend(info.buyer, payment);
+
+              info.lockedFunds = 0;
+              return;
+          }
+
+          if(info.buyerNo) {
+
+              safeSend(info.buyer, payment);
+
+              info.lockedFunds = 0;
+              return;
+          }
+          if(info.sellerNo) {
+
+              safeSend(seller, payment);
+
+              info.lockedFunds = 0;
+              return;
+          }
+      }
 
 
 //------------------------------------------------------------------------------
