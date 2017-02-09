@@ -231,6 +231,49 @@ function EscrowAdvansed(address _arbiter, uint _freezePeriod, uint _feePromille,
       LogEvent(_lockId, _dataInfo, _version, Unlock, msg.sender, payment);
   }
 
+
+
+
+      //vote NO - freeze funds for arbitration
+      function no(uint _lockId, string _dataInfo, uint _version) {
+
+          EscrowInfo info = escrows[_lockId];
+
+          if(info.lockedFunds == 0) {
+              LogDebug("info.lockedFunds == 0");
+              return;
+          }
+          if(msg.sender != info.buyer && msg.sender != seller) {
+              LogDebug("msg.sender != info.buyer && msg.sender != seller");
+              return;
+          }
+
+          //freeze funds
+          //only allow one time freeze
+          if(info.frozenFunds == 0) {
+              info.frozenFunds = info.lockedFunds;
+              info.frozenTime = uint64(now);
+          }
+
+          if(msg.sender == info.buyer) {
+              info.buyerNo = true;
+          }
+          else if(msg.sender == seller) {
+              info.sellerNo = true;
+          } else {
+              //HACK: should not get here
+              LogDebug("unknown msg.sender");
+              return;
+          }
+
+          LogEvent(_lockId, _dataInfo, _version, Freeze, msg.sender, info.lockedFunds);
+      }
+
+
+
+      
+
+
 //------------------------------------------------------------------------------
 
 //DEALS API---------------------------------------------------------------------
