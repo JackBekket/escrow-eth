@@ -323,7 +323,19 @@ function EscrowAdvansed(address _arbiter, uint _freezePeriod, uint _feePromille,
           LogEvent(_lockId, _dataInfo, _version, Resolved, msg.sender, _payment);
       }
 
+      //allow arbiter to get his collected fees
+      function getFees() onlyArbiter {
 
+          if(feeFunds > this.balance) {
+              //HACK: should not get here - funds cannot be unlocked in this case
+              LogDebug("feeFunds > this.balance");
+              return;
+          }
+
+          safeSend(arbiter, feeFunds);
+
+          feeFunds = 0;
+      }
 
 
 
