@@ -499,6 +499,19 @@ function cancel(string _dataInfo, uint _version) onlyOwner {
 }
 
 
+//remove buyer from the watchlist
+function unbuy() {
+
+    buyers[msg.sender] = false;
+}
+
+//fallback function deny any deposits to contract
+function () {
+    throw;
+}
+
+
+
 
 //end of contract
 }
