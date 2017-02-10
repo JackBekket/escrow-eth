@@ -75,14 +75,7 @@ uint16 constant internal Canceled = 2;
   //status of the deals  - probably deprecate it
   uint16 public status;
 
-  //how many for sale - probably deprecate it
-//  uint16 public count;
 
-  //price per item
-//  uint public price;
-
-//  uint16 public availableCount;
-//  uint16 public pendingCount;
 //---------------------------------------------
 
 
@@ -142,10 +135,7 @@ function EscrowAdvansed(address _arbiter, uint _freezePeriod, uint _feePromille,
 //deal related --just some thoughts
 
       status = Available;
-  //    count = _count;
-  //    price = _price;
 
-  //    availableCount = count;
 //-----------------------------------
 
     //end of constructor
@@ -500,7 +490,7 @@ function cancel(string _dataInfo, uint _version) onlyOwner {
 
 
 //remove buyer from the watchlist
-function unbuy() {
+function stop() {
 
     buyers[msg.sender] = false;
 }
