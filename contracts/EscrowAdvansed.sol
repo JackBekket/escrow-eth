@@ -8,7 +8,7 @@ seller = deployer of contract, executor of DEAL
 buyer = user of contract, initiator of DEAL.
 logic - seller sell something (e.g some service), buyer is ready to buy.
 
-TODO - clean comments,clean version&dataibfo.
+
 
 
 **/
