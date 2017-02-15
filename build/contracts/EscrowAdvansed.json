@@ -54,12 +54,12 @@
         }
       },
       "links": {},
-      "address": "0x3d89f1b2e40eaba0f03a5e8e0ec3c02e73e510f3",
-      "updated_at": 1487157751306
+      "address": "0xe6af7a6205c5433f15a5d7578faac4ca62df6648",
+      "updated_at": 1487159496489
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1487157751306,
+  "updated_at": 1487159496489,
   "abi": [
     {
       "constant": true,

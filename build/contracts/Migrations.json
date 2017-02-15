@@ -4,12 +4,12 @@
     "1487153731944": {
       "events": {},
       "links": {},
-      "address": "0xdd4ff19a29a5257b4b5b301b49797bee9ab8b39c",
-      "updated_at": 1487157751823
+      "address": "0x86ca9ccd29889807a08ac6198422b3b59da1beac",
+      "updated_at": 1487159496536
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1487157751823,
+  "updated_at": 1487159496536,
   "abi": [
     {
       "constant": false,

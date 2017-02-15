@@ -16,6 +16,8 @@ CHANGELOG:
 -migration script upd.
 -other minor fixes.
 
+--default seller is accounts[0] (msg.sender), default arbiter is accounts[1]
+
 
 USAGE
 
