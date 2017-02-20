@@ -1,6 +1,17 @@
-module.exports = {
+var DefaultBuilder = require("truffle-default-builder");
 
-  // Upd to truffle version 3.1
+
+module.exports = {
+  build: new DefaultBuilder({
+     "index.html": "index.html",
+     "app.js": [
+       "javascripts/app.js"
+     ],
+     "app.css": [
+       "stylesheets/app.css"
+     ],
+     "images/": "images/"
+   }),
   networks: {
      development: {
        host: "localhost",
