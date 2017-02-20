@@ -2,6 +2,8 @@ var DefaultBuilder = require("truffle-default-builder");
 
 
 module.exports = {
+  /**
+  DefaultBuilder
   build: new DefaultBuilder({
      "index.html": "index.html",
      "app.js": [
@@ -12,6 +14,8 @@ module.exports = {
      ],
      "images/": "images/"
    }),
+   **/
+   // Webpack builder
   networks: {
      development: {
        host: "localhost",
