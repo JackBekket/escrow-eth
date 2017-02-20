@@ -26,8 +26,12 @@ var EscrowAdvansed = contract(json);
 // Step 3: Provision the contract with a web3 provider
 //EscrowAdvansed.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"));
 
-
-
+/**
+// Step 4: Use the contract!
+EscrowAdvansed.deployed().then(function(deployed) {
+  return deployed.someFunction();
+});
+**/
 
 
 // For application bootstrapping, check out window.addEventListener below.
@@ -70,7 +74,7 @@ window.App = {
   },
 
 
-
+//payload functions.
 
 
 
