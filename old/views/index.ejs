@@ -1,0 +1,166 @@
+
+<% include partial/header %>
+
+<%# Main container %>
+<div class="ui container" style="margin-top:5em;">
+    <%# Dropdown init%>
+    <div style="text-align:center;">
+        <h3>Choose your contract!</h3>
+        <div class="ui selection dropdown" id="mainDrop">
+          <input type="hidden" name="gender">
+          <i class="dropdown icon"></i>
+          <div class="default text">What do you want to deploy?</div>
+          <div class="menu">
+            <div class="item" data-value="0">Invoice Contract</div>
+            <div class="item" data-value="1">Escrow Contract</div>
+          </div>
+        </div>
+    </div> <%# END: Dropdown init%>
+
+
+
+
+
+    <%# Dropdown Logic%>
+    <script type="text/javascript">
+        function getAccount(){
+            var account = $.trim($('#accountsDrop .text').text());
+            var res;
+            switch(account){
+
+                case "Joe":
+                    res = 0;
+                    break;
+              case "Elliot":
+                    res = 1;
+                    break;
+                case "Laura":
+                    res = 2;
+                    break;
+                case "Christian":
+                    res = 3;
+                    break;
+            }
+            return res;
+        }
+         function getActualCorrespondents(){
+         var dropoptions = "";
+        var acc = getAccount();
+if(acc!=0) dropoptions = dropoptions + ' <option class="opti" id="n0" value="0">Joe</option>';
+if(acc!=1) dropoptions = dropoptions + ' <option class="opti" id="n1" value="1">Elliot</option>';
+if(acc!=2) dropoptions = dropoptions + ' <option class="opti" id="n2" value="2">Laura</option>';
+if(acc!=3) dropoptions = dropoptions + ' <option class="opti" id="n3" value="3">Christian</option>';
+        console.log(dropoptions);
+        return dropoptions;
+}
+        function addAccount(){
+            $('.mainBody').find('form').append(`
+                <input style="display:none" type="string" value="${getAccount()}" name="account" readonly>`
+            );
+            return true;
+        }
+
+        $('#accountsDrop').dropdown({
+                                     onChange: function() {
+//$('#id0').hide();
+var dropoptions = "";
+acc = getAccount();
+if(acc!=0) dropoptions = dropoptions + ' <option class="opti" id="n0" value="0">Joe</option>';
+if(acc!=1) dropoptions = dropoptions + ' <option class="opti" id="n1" value="1">Elliot</option>';
+if(acc!=2) dropoptions = dropoptions + ' <option class="opti" id="n2" value="2">Laura</option>';
+if(acc!=3) dropoptions = dropoptions + ' <option class="opti" id="n3" value="3">Christian</option>';
+console.log(acc +" - --- " + dropoptions  );
+
+$('#receiver1').find('[opti]').remove();
+ $('#receiver1').html(dropoptions);
+ $('#receiver2').find('[opti]').remove();
+  $('#receiver2').html(dropoptions);
+//$('#receiver1').remove();
+
+
+                                     }
+                                    });
+        $('#mainDrop')
+            .dropdown({
+                action: 'hide',
+                onChange: function(value){
+                    if(value == 0){
+                        $('.mainBody').empty();
+                        $('.mainBody').append(`
+                            <div style="margin-top:5em;">
+                                <form class="ui form" method="get" action="invoice" onsubmit="addAccount()">
+                                    <div class="field">
+                                        <h2 style="text-align:center">Invoice Contract</h2>
+                                        <label>Product [string]</label>
+                                        <input type="text" name="product" placeholder="Your product">
+                                    </div>
+                                    <div class="field">
+                                        <label>Message [string]</label>
+                                        <input type="text" name="message" placeholder="Simple message to be stored as a consent to this contract">
+                                    </div>
+                                    <div class="field">
+                                        <label>Limit Date [string]</label>
+                                        <input type="text" name="limitDate" placeholder="Contract's limit time (doesn't do anything)">
+                                    </div>
+                                    <div class="field">
+                                        <label>Reciever's Address [Dropdown]</label>
+                                        <select id="receiver1" name="receiver">
+                                        `+ getActualCorrespondents() +`
+
+                                        </select>
+
+                                        
+                                    </div>
+                                    <div class="field">
+                                        <label>Amount to pay [integer]</label>
+                                        <input type="number" name="amount" placeholder="Amount to be claimed">
+                                    </div>
+                                    <button class="ui button secondary" type="submit">Submit</button>
+                                </form>
+                            </div>
+                        `);
+                    }
+                    else{
+                        $('.mainBody').empty();
+                        $('.mainBody').append(`
+                            <div style="margin-top:5em;">
+                                <div class="ui container">
+                                    <form class="ui form" method="get" action="escrow" onsubmit="addAccount()">
+                                        <div class="field">
+                                            <h2 style="text-align:center">Escrow Contract</h2>
+                                            <div class="field">
+                                        
+                                         <label>Reciever's Address [Dropdown]</label>
+                                        
+                                        <select id="receiver2" name="receiver">
+                                         `+ getActualCorrespondents() +`
+                                        </select>
+
+
+                                    </div>
+                                            <label>Message [string]</label>
+                                            <input type="text" name="message" placeholder="Simple message to be stored as a consent to this contract">
+                                        </div>
+                                         <div class="field">
+                                        <label>Amount to Escrow [integer]</label>
+                                        <input type="number" name="amount" placeholder="Amount to be Escrow">
+                                    </div>
+                                        <button class="ui button secondary" type="submit">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        `)
+                    }
+                }
+            });
+    </script> <%# END: Dropdown logic%>
+
+    <%# Modular content appended by dropdown%>
+    <div class="ui container mainBody">
+    </div> <%# Modular content appended by dropdown%>
+
+</div> <%# END: Main container%>
+
+
+
+<% include partial/footer %>

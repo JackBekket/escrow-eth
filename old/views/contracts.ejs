@@ -1,0 +1,39 @@
+<% include partial/header %>
+
+<%# Tables with contracts %>
+<div class="ui container" style="margin-top:5em;">
+    <table class="ui selectable table" style="text-align:center" >
+        <thead>
+            <tr>
+              <th>ID</th>
+              <th>Transaction Description</th>
+              <th>Functions</th>
+              <th>Status</th>
+              <th>From</th>
+              <th>To</th>
+            </tr>
+        </thead>
+        <tbody id='contracts'></tbody>
+    </table>
+</div><%# END: Tables with contracts %>
+
+<%# Modal Check init %>
+
+<div class="ui modal" id="modalCheck">
+    <div class="header" style="text-align:center;"></div>
+        <div class="content">
+        </div>
+    <div class="actions">
+        <div class="ui approve inverted green button">Close</div>
+    </div>
+</div>
+
+<%# END: Modal Check init %>
+
+
+<script src="js/contracts.js"></script>
+
+
+
+
+<% include partial/footer %>

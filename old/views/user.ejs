@@ -1,0 +1,56 @@
+<% include partial/header2 %>
+
+<%# Tables with contracts %>
+
+
+
+<div class="ui container" style="margin-top:5em;">
+My contracts with other person:
+    <table class="ui selectable  celled table" style="text-align:center" >
+   
+        <thead>
+            <tr>
+              <th>ID</th>
+              <th>Contract Information</th>
+              <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id='contracts_by_user'></tbody>
+    </table>
+</div><%# END: Tables with contracts %>
+
+<%# Tables with contracts_to %>
+<div class="ui container" style="margin-top:5em;">
+Contracts by other person with me:
+    <table class="ui selectable  celled  table" style="text-align:center" >
+        <thead>
+            <tr>
+              <th>ID</th>
+              <th>Contract Information</th>
+              <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id='contracts_to_user'></tbody>
+    </table>
+</div><%# END: Tables with contracts_to %>
+
+<%# Modal Check init %>
+
+<div class="ui modal" id="modalCheck">
+    <div class="header" style="text-align:center;"></div>
+        <div class="content">
+        </div>
+    <div class="actions">
+        <div class="ui approve inverted green button">Close</div>
+    </div>
+</div>
+
+<%# END: Modal Check init %>
+
+
+<script src="js/user.js"></script>
+
+
+
+
+<% include partial/footer %>

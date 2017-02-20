@@ -80,6 +80,7 @@ window.App = {
 
 
 
+
 // Some example syntax ----------------------------------
 /**
   refreshBalance: function() {

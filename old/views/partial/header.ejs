@@ -1,0 +1,55 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
+</head>
+<body>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/semantic.min.js"></script>
+
+<%# Menu and title%>
+<div class="ui container" style="text-align:center;">
+    <div style="margin-top:3em;">
+        <h1 style="text-align:center;">Contracts on Ethereum <br> Admin Panel</h1>
+        <div style="text-align:right">
+            <span  style="padding-left:5em">
+              Choose an account
+              <div class="ui inline dropdown" id="accountsDrop">
+                <div class="text">
+                  <img class="ui avatar image" src="css/themes/default/assets/images/elliot.jpg">
+                  Elliot
+                </div>
+
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                  <div class="item">
+                    <img class="ui avatar image" src="css/themes/default/assets/images/joe.jpg">
+                    Joe
+                  </div>
+                  <div class="item">
+                    <img class="ui avatar image" src="css/themes/default/assets/images/elliot.jpg">
+                    Elliot
+                  </div>
+                  <div class="item">
+                    <img class="ui avatar image" src="css/themes/default/assets/images/stevie.jpg">
+                    Laura
+                  </div>
+                  <div class="item">
+                    <img class="ui avatar image" src="css/themes/default/assets/images/christian.jpg">
+                    Christian
+                  </div>
+                </div>
+              </div>
+            </span><br><br>
+<a href="http://li1485-188.members.linode.com:8080/contracts_by_user"> User panel</a>
+        </div>
+    </div>
+
+    <div style="margin-top:3em;">
+        <button class="ui button primary" onclick="location.href='/';">
+          Deploy Contract
+        </button>
+        <button class="ui button primary" onclick="location.href='contracts';">
+          My Contracts
+        </button>
+    </div>
+</div> <%# END: Menu and title%>
