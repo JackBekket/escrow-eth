@@ -17,7 +17,7 @@ module.exports = {
      "images/": "images/"
    }),
    **/
-   // Webpack builder
+   // Webpack builder configuration is in webpack.config.js
   networks: {
      development: {
        host: "localhost",
