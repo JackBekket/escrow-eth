@@ -19,7 +19,7 @@ CHANGELOG:
 --default seller is accounts[0] (msg.sender), default arbiter is accounts[1]
 
 
-USAGE
+# USAGE
 
 ```
 var contr = EscrowAdvansed.deployed();
