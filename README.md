@@ -9,14 +9,8 @@ EscrowSimple - simple contract of eth esrow without state values.
 EscrowAdvansed
 (https://github.com/JackBekket/escrow-eth/blob/master/contracts/EscrowAdvansed.sol)
 
-15.02 - project updated to truffle standart ver 3.x
-CHANGELOG:
--contracts binary updated to json instead of sol.js
--config upd - network definition
--migration script upd.
--other minor fixes.
 
---default seller is accounts[0] (msg.sender), default arbiter is accounts[1]
+default seller is accounts[0] (msg.sender), default arbiter is accounts[1]
 
 
 # USAGE
