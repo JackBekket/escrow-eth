@@ -73,6 +73,13 @@ window.App = {
     status.innerHTML = message;
   },
 
+ setStatusPos: function (pos, msg){
+$(pos).html(msg);
+
+},
+  
+  
+  
 
 //payload functions.
 
