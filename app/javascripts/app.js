@@ -38,6 +38,10 @@ EscrowAdvansed.deployed().then(function(deployed) {
 var accounts;
 var account;
 
+
+var MyEscrowInstance;
+
+
 window.App = {
   start: function() {
     var self = this;
@@ -66,6 +70,13 @@ window.App = {
       //Here you can input some initial functions.
 
     });
+    
+    
+     EscrowAdvanced.deployed().then(function(instance) {
+      MyEscrowInstance=instance;
+      });
+    
+    
   },
 
   setStatus: function(message) {
@@ -78,8 +89,15 @@ $(pos).html(msg);
 
 },
   
-  
-  
+  //Пример блока
+  someFunction: function (){
+    var self = this;
+    var amount = $('#transfer_am').val();
+    var to = $("#transfer_to").val();
+  this.setStatus("Initiating transaction... (please wait)");
+    alert("this work");
+  }
+    
 
 //payload functions.
 
@@ -130,6 +148,10 @@ $(pos).html(msg);
 **/
 //---------------------------------
 
+};
+  
+  
+  
 window.addEventListener('load', function() {
   // Checking if Web3 has been injected by the browser (Mist/MetaMask)
   if (typeof web3 !== 'undefined') {
