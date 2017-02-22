@@ -1,29 +1,33 @@
 // Import the page's CSS. Webpack will know what to do with it.
- import "../stylesheets/app.css"
+ //import "../stylesheets/app.css"
 
 // Import libraries we need.
-import { default as Web3} from 'web3'
-import { default as contract } from 'truffle-contract'
+// import { default as Web3} from 'web3'
+// import { default as contract } from 'truffle-contract'
 
 
 //Import example if you want to use 'import' syntax instead 'require' standart.
 // Import our contract artifacts and turn them into usable abstractions.
-import escrow_artifacts from '../../build/contracts/EscrowAdvansed.json'
+// import escrow_artifacts from '../../build/contracts/EscrowAdvansed.json'
 
 // MetaCoin is our usable abstraction, which we'll use through the code below.
-var EscrowAdvansed = contract(escrow_artifacts);
-console.log('json');
-console.log(EscrowAdvansed);
+//var EscrowAdvansed = contract(escrow_artifacts);
+//console.log('json');
+//console.log(EscrowAdvansed);
 
+
+var contract = require('truffle-contract');
 
 //require syntax.
 // Require our contract artifacts and turn them into usable abstractions.
-//var json = require("../../build/contracts/EscrowAdvansed.json");
-
+//var json0 = require("./build/contracts/BasicToken.json");
+var json = require('../../build/contracts/EscrowAdvansed.json');
+//var json2 = require('./contracts/EscrowAdvansed.json');
+var Web3 = require('web3');
 // Turn our contract into an abstraction
-//var contract = require("truffle-contract");
-//var EscrowAdvansed = contract(json);
-//console.log(EscrowAdvansed);
+
+var EscrowAdvansed = contract(json);
+console.log(EscrowAdvansed);
 // Step 3: Provision the contract with a web3 provider
 //EscrowAdvansed.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"));
 
