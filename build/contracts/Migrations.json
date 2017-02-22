@@ -6,10 +6,16 @@
       "links": {},
       "address": "0x86ca9ccd29889807a08ac6198422b3b59da1beac",
       "updated_at": 1487159496536
+    },
+    "1487753606907": {
+      "events": {},
+      "links": {},
+      "address": "0x7116b156d18ced9ec2d92bf173d3265037651a90",
+      "updated_at": 1487753645611
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1487159496536,
+  "updated_at": 1487753645611,
   "abi": [
     {
       "constant": false,

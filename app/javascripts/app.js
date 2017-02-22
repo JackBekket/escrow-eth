@@ -17,7 +17,7 @@ var EscrowAdvansed = contract(escrow_artifacts);
 
 //require syntax.
 // Require our contract artifacts and turn them into usable abstractions.
-var json = require("./build/contracts/EscrowAdvansed.json");
+var json = require("../../build/contracts/EscrowAdvansed.json");
 
 // Turn our contract into an abstraction
 var contract = require("truffle-contract");
@@ -70,13 +70,13 @@ window.App = {
       //Here you can input some initial functions.
 
     });
-    
-    
+
+
      EscrowAdvanced.deployed().then(function(instance) {
       MyEscrowInstance=instance;
       });
-    
-    
+
+
   },
 
   setStatus: function(message) {
@@ -88,7 +88,7 @@ window.App = {
 $(pos).html(msg);
 
 },
-  
+
   //Пример блока
   someFunction: function (){
     var self = this;
@@ -97,7 +97,7 @@ $(pos).html(msg);
   this.setStatus("Initiating transaction... (please wait)");
     alert("this work");
   }
-    
+
 
 //payload functions.
 
@@ -149,9 +149,9 @@ $(pos).html(msg);
 //---------------------------------
 
 };
-  
-  
-  
+
+
+
 window.addEventListener('load', function() {
   // Checking if Web3 has been injected by the browser (Mist/MetaMask)
   if (typeof web3 !== 'undefined') {
