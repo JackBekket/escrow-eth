@@ -1,29 +1,61 @@
-# truffle-init-webpack
-Example webpack project with Truffle. Includes contracts, migrations, tests, user interface and webpack build pipeline.
+# escrow-eth
 
-## Usage
+Contract of escrow-eth
 
-To initialize a project with this exapmple, run `truffle init webpack` inside an empty directory.
 
-## Building and the frontend
+EscrowSimple - simple contract of eth esrow without state values.
+(https://github.com/JackBekket/escrow-eth/blob/master/contracts/EscrowSimple.sol)
 
-1. First run `truffle compile`, then run `truffle migrate` to deploy the contracts onto your network of choice (default "development").
-1. Then run `npm run dev` to build the app and serve it on http://localhost:8080
+EscrowAdvansed
+(https://github.com/JackBekket/escrow-eth/blob/master/contracts/EscrowAdvansed.sol)
 
-## Possible upgrades
 
-* Use the webpack hotloader to sense when contracts or javascript have been recompiled and rebuild the application. Contributions welcome!
+default seller is accounts[0] (msg.sender), default arbiter is accounts[1]
 
-## Common Errors
 
-* **Error: Can't resolve '../build/contracts/MetaCoin.json'**
-
-This means you haven't compiled or migrated your contracts yet. Run `truffle compile` and `truffle migrate` first.
-
-Full error:
+# USAGE
 
 ```
-ERROR in ./app/main.js
-Module not found: Error: Can't resolve '../build/contracts/MetaCoin.json' in '/Users/tim/Documents/workspace/Consensys/test3/app'
- @ ./app/main.js 11:16-59
+var contr = EscrowAdvansed.deployed();
+```
+
+# Truffle 2.x or standart web3 Javascript-console
+
+  if you are using standart web3 Javascript-console or ``` truffle ver 2.x ``` you should type:
+
+```
+contr.somefunction(args);
+```
+like:
+
+```
+contr.start(0,'bla',1,{from: web3.eth.accounts[1], value:100});
+
+```
+or you can call variable like:
+
+```
+contr.totalEscrows.call();
+
+```
+
+# Truffle 3.x
+
+Cause of new break-changes in new version of truffle (http://truffleframework.com/tutorials/upgrading-from-truffle-2-to-3#contract-abstractions-deployed-is-now-thennable)
+
+you should use the next sintax instead of above one.:
+
+```
+contr.then(function(res){return res.somefunction(args)});
+
+```
+  like:
+
+  ```
+contr.then(function(res){return res.start(0,'bla',1,{from: web3.eth.accounts[1], value:100})});
+```
+and call variable like this:
+
+```
+contr.then(function(res){return res.totalEscrows.call()});
 ```
