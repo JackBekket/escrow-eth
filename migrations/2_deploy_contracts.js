@@ -1,11 +1,8 @@
+var ConvertLib = artifacts.require("./ConvertLib.sol");
+var MetaCoin = artifacts.require("./MetaCoin.sol");
+
 module.exports = function(deployer) {
-
-// Converted to truffle 3.1 version
-
-var EscrowAdvansed=artifacts.require("EscrowAdvansed.sol");
-
-//deployer.deploy(EscrowSimple);
-deployer.deploy(EscrowAdvansed,web3.eth.accounts[1],10,1,1);
-
-
+  deployer.deploy(ConvertLib);
+  deployer.link(ConvertLib, MetaCoin);
+  deployer.deploy(MetaCoin);
 };

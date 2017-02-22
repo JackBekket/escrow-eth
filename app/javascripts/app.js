@@ -1,72 +1,28 @@
 // Import the page's CSS. Webpack will know what to do with it.
- //import "../stylesheets/app.css"
+import "../stylesheets/app.css";
 
 // Import libraries we need.
- import { default as Web3} from 'web3'
- import { default as contract } from 'truffle-contract'
+import { default as Web3} from 'web3';
+import { default as contract } from 'truffle-contract'
 
-
-//Import example if you want to use 'import' syntax instead 'require' standart.
 // Import our contract artifacts and turn them into usable abstractions.
- import escrow_artifacts from '../../build/contracts/EscrowAdvansed.json'
+import metacoin_artifacts from '../../build/contracts/MetaCoin.json'
 
 // MetaCoin is our usable abstraction, which we'll use through the code below.
-var EscrowAdvansed = contract(escrow_artifacts);
-//console.log('json');
-console.log('artifacts');
-console.log(EscrowAdvansed);
+var MetaCoin = contract(metacoin_artifacts);
 
-var MyEscrowInstance;
-/**
- EscrowAdvanced.deployed().then(function(instance) {
-    MyEscrowInstance=instance;
-    console.log(instance.deployed_address);
-    console.log(EscrowAdvanced.deployed_address);
-    console.log(MyEscrowInstance);
-    });
-**/
-
-
-//var contract = require('truffle-contract');
-
-//require syntax.
-// Require our contract artifacts and turn them into usable abstractions.
-//var json0 = require("./build/contracts/BasicToken.json");
-//var json = require('../../build/contracts/EscrowAdvansed.json');
-//var json2 = require('./contracts/EscrowAdvansed.json');
-//var Web3 = require('web3');
-// Turn our contract into an abstraction
-
-//var EscrowAdvansed = contract(json);
-//console.log(EscrowAdvansed);
-// Step 3: Provision the contract with a web3 provider
-//EscrowAdvansed.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"));
-
-/**
-// Step 4: Use the contract!
-EscrowAdvansed.deployed().then(function(deployed) {
-  return deployed.someFunction();
-});
-**/
-
-
+// The following code is simple to show off interacting with your contracts.
+// As your needs grow you will likely need to change its form and structure.
 // For application bootstrapping, check out window.addEventListener below.
 var accounts;
 var account;
-
-
-
-
 
 window.App = {
   start: function() {
     var self = this;
 
-
-
-    // Bootstrap the EscrowAdvansed abstraction for Use.
-    //EscrowAdvansed.setProvider(web3.currentProvider);
-    EscrowAdvansed.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"));
+    // Bootstrap the MetaCoin abstraction for Use.
+    MetaCoin.setProvider(web3.currentProvider);
 
     // Get the initial account balance so it can be displayed.
     web3.eth.getAccounts(function(err, accs) {
@@ -82,78 +38,23 @@ window.App = {
 
       accounts = accs;
       account = accounts[0];
-  //    console.log(account);
 
-      //Here you can input some initial functions.
-
+      self.refreshBalance();
     });
-
-    self.refreshAddress();
-
-/**
-   EscrowAdvanced.deployed().then(function(instance) {
-      MyEscrowInstance=instance;
-
-      console.log(instance.deployed_address);
-      console.log(EscrowAdvanced.deployed_address);
-      console.log(MyEscrowInstance);
-      return instance.seller.call({from:account});
-      });
-**/
-
   },
-
-  refreshAddress: function(){
-    var self=this;
-    var MyEscrowInstance;
-    EscrowAdvanced.deployed().then(function(instance) {
-       MyEscrowInstance=instance;
-
-       console.log(instance.deployed_address);
-       console.log(EscrowAdvanced.deployed_address);
-       console.log(MyEscrowInstance);
-    //   return instance.seller.call({from:account});
-  });
-
-  },
-
-
 
   setStatus: function(message) {
     var status = document.getElementById("status");
     status.innerHTML = message;
   },
 
- setStatusPos: function (pos, msg){
-$(pos).html(msg);
-
-},
-
-  //Пример блока
-  someFunction: function (){
-    var self = this;
-    var amount = $('#transfer_am').val();
-    var to = $("#transfer_to").val();
-  this.setStatus("Initiating transaction... (please wait)");
-    alert("this work");
-  }
-
-
-//payload functions.
-
-
-
-
-
-
-// Some example syntax ----------------------------------
-/**
   refreshBalance: function() {
     var self = this;
 
     var meta;
     MetaCoin.deployed().then(function(instance) {
       meta = instance;
+      console.log(meta);
       return meta.getBalance.call(account, {from: account});
     }).then(function(value) {
       var balance_element = document.getElementById("balance");
@@ -185,12 +86,6 @@ $(pos).html(msg);
     });
   }
 };
-**/
-//---------------------------------
-
-};
-
-
 
 window.addEventListener('load', function() {
   // Checking if Web3 has been injected by the browser (Mist/MetaMask)
