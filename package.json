@@ -35,6 +35,7 @@
     "webpack-dev-server": "^2.3.0"
   },
   "dependencies": {
+    "truffle-default-builder": "^2.0.0",
     "web3": "^0.17.0-alpha"
   }
 }

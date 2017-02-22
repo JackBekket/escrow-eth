@@ -1,11 +1,11 @@
-//var DefaultBuilder = require("truffle-default-builder");
+var DefaultBuilder = require("truffle-default-builder");
 
 // Allows us to use ES6 in our migrations and tests.
 require('babel-register')
 
 module.exports = {
-  /**
-  DefaultBuilder
+
+//  DefaultBuilder
   build: new DefaultBuilder({
      "index.html": "index.html",
      "app.js": [
@@ -16,7 +16,7 @@ module.exports = {
      ],
      "images/": "images/"
    }),
-   **/
+
    // Webpack builder configuration is in webpack.config.js
   networks: {
      development: {
@@ -24,5 +24,6 @@ module.exports = {
        port: 8545,
        network_id: "*"
      }
-   }
+   },
+//   build: "webpack"
 };
