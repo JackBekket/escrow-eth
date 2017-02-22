@@ -22,7 +22,7 @@ var json = require("../../build/contracts/EscrowAdvansed.json");
 // Turn our contract into an abstraction
 var contract = require("truffle-contract");
 var EscrowAdvansed = contract(json);
-
+console.log(EscrowAdvansed);
 // Step 3: Provision the contract with a web3 provider
 //EscrowAdvansed.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"));
 
@@ -75,6 +75,7 @@ window.App = {
 
      EscrowAdvanced.deployed().then(function(instance) {
       MyEscrowInstance=instance;
+      console.log(instance.deployed_address);
       console.log(EscrowAdvanced.deployed_address);
       console.log(MyEscrowInstance);
       });
