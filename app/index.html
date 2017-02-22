@@ -4,20 +4,139 @@
   <title>MetaCoin - Truffle Webpack Demo w/ Frontend</title>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
   <script src="./app.js"></script>
+  <link href="./app.css" rel='stylesheet' type='text/css'>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 <body>
-  <h1>MetaCoin</h1>
-  <h2>Example Truffle Dapp</h2>
-  <h3>You have <span class="black"><span id="balance"></span> META</span></h3>
+ <h2><center>Создание контракта</center></h2>
+<hr>
+<br>
+<label for="Buyer address">Seller address: <span id="selleraddr1">0x0...</span>
+<br><label for="Seller Arbiter">Seller Arbiter<input maxlength="40" size="40" value=>
+<br>
+<br><label for="Freezeperiod">Freezeperiod<input maxlength="40" size="40" value=>
+<br>
+<br><label for="Fee promille">Fee promille<input maxlength="40" size="40" value=>
+<br>
+<br><label for="Rew promille">Rew promille<input maxlength="40" size="40" value=>
+<br>
+<span id="createStatus"></span>
+<br><br><td align="right"> <button id="CreateEscr" onclick="">New</button></td>
+<hr>
+<h2><center>Старт Эскроу</center></h2>
+<hr>
+<br>
+<label for="Buyer address">Buyer address: <span id="buyeraddr1">0x0...</span>
+<br>
+<br><label for="Seller address">Seller address<input maxlength="40" size="40" value=>
+<br>
+<br><label for="Amount">Amount<input maxlength="40" size="40" value=>
+<br>
+<br><label for="Description">Description<input maxlength="40" size="40" value=>
+<br>
+<span id="startStatus"></span>
+<br><br><td align="right"> <button id="StartEscr" onclick="">Start</button></td>
+<hr>
+<h2><center>Seller</center></h2>
+<hr>
+<h2><center>Сделки Invoice</center></h2>
+<form>
+  Buyer Address:<p> <span id="invoiceBuyerAddr">0x00</span>
+  Amount:<p> <span id="invoiceAmount"></span>
+  Description:<p> <span id="invoiceDescription"></span>
+  Status:<p> <span id="invoiceStatus"></span>
+  <button id="invoiceAccept" onclick="">Accept</button><button id="invoiceReject" onclick="">Reject</button>
+ </form>
+ <form><p>
+ </form>
+<hr>
 
+<h2><center>Текущие сделки</center></h2>
+<hr>
+<form>
   <br>
-  <h1>Send MetaCoin</h1>
-  <br><label for="amount">Amount:</label><input type="text" id="amount" placeholder="e.g., 95"></input>
-  <br><label for="receiver">To Address:</label><input type="text" id="receiver" placeholder="e.g., 0x93e66d9baea28c17d9fc393b53e3fbdd76899dae"></input>
-  <br><br><button id="send" onclick="App.sendCoin()">Send MetaCoin</button>
-  <br><br>
-  <span id="status"></span>
+<label for="Buyer address">Buyer address: <span id="buyeraddr2">0x0...</span>
+<br>
+  Amount:<p> <span id="currentAmount"></span>
+  Description:<p> <span id="currentDescr"></span>
+  Status:<p> <span id="currentStatus"></span>
+  <button id="sellerDone" onclick="">Done</button><button id="sellerCancel" onclick="">Cancel</button><button id="sellerArbiter" onclick="">Arbiter</button><p>
+ </form>
+<hr>
+<h2><center>Buyer</center></h2>
+<hr>
+<h2><center>
+Сделки с продавцами
+</center></h2>
+<form>
   <br>
-  <span class="hint"><strong>Hint:</strong> open the browser developer console to view any errors and warnings.</span>
+<label for="Seller address">Seller address: <span id="selleraddr2">0x0...</span>
+	<br>
+  Amount:<p> <span id="buyer1amount"></span>
+  Description:<p> <span id="buyer1Description"></span>
+  Status:<p><span id="buyer1Status"></span>
+  <button id="buyer1Detail" onclick="">Detail</button>
+ </form>
+ <form><p>
+ </form>
+ <hr>
+<h2><center>
+  <p>&nbsp;</p>
+  <p>Сделки с продавцом</p>
+</center></h2>
+<hr>
+<h2><center>Адрес продавца: <span id="selleraddr3">0x0...</span></center></h2>
+<hr>
+<form>
+  Lock id:<p> <span id="buyer2lockid"></span>
+  Amount:<p> <span id="buyer2amount"></span>
+  Description:<p><span id="buyer2Description"></span>
+  Status:<p><span id="buyer2Status"></span>
+  <p><button id="buyer2Submit" onclick="">Submit</button><button id="buyer2Arbiter" onclick="">Arbiter</button></p>
+ </form>
+  <form>
+  <p>
+  </form>
+  <hr>
+ <h2><center>Arbiter</center></h2>
+  <hr>
+  <h2><center>Продавцы</center></h2>
+  <hr>
+  <form>
+  Address:<p><span id="arbiter1address"></span>
+ <button id="arbiter1Detail" onclick="">Detail</button>
+  </form>
+  <form><p>
+  </form>
+  <hr>
+<h2><center>Продавец</center></h2>
+<hr>
+<form>
+  Address:<p><span id="arbiter2address"></span>
+  Amount:<p><span id="arbiter2Amount"></span>
+  Description:<p><span id="arbiter2Description"></span>
+  Lock id:<p><span id="arbiter2Lockid"></span>
+  Buyer:<p><span id="arbiter2Buyer"></span>
+  Withdraw to:<button id="arbiter2Seller" onclick="">Seller</button><button id="arbiter2Buyer" onclick="">Buyer</button><p>
+ </form>
+ <hr>
+
+
+<!--
+Пример блока:
+-->
+   <div class="section">
+       <h2>Отправить деньги</h2>
+       Сумма перевода <input type="text" id="transfer_am" value="10" />
+         Кому <input type="text" id="transfer_to" />
+         <button id="transfer" onClick="App.someFunction()">Перевести</button>
+         <span id="transfer_result" color="blue"></span>
+     </div>
+     <hr/>
+
+
+
+
+
 </body>
 </html>
