@@ -3,7 +3,7 @@ import "../stylesheets/app.css";
 
 // Import libraries we need.
 import { default as Web3} from 'web3';
-import { default as contract } from 'truffle-contract'
+import { default as contract } from 'truffle-contract';
 
 /**
 Import example if you want to use 'import' syntax instead 'require' standart.
@@ -66,6 +66,7 @@ window.App = {
 
       accounts = accs;
       account = accounts[0];
+      console.log(account);
 
       //Here you can input some initial functions.
 
@@ -74,6 +75,8 @@ window.App = {
 
      EscrowAdvanced.deployed().then(function(instance) {
       MyEscrowInstance=instance;
+      console.log(EscrowAdvanced.deployed_address);
+      console.log(MyEscrowInstance);
       });
 
 
