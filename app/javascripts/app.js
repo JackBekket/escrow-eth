@@ -5,24 +5,25 @@ import "../stylesheets/app.css";
 import { default as Web3} from 'web3';
 import { default as contract } from 'truffle-contract';
 
-/**
-Import example if you want to use 'import' syntax instead 'require' standart.
+
+//Import example if you want to use 'import' syntax instead 'require' standart.
 // Import our contract artifacts and turn them into usable abstractions.
-import escrow_artifacts from '../../build/contracts/EscrowAdvansed.json'
+import escrow_artifacts from '../../build/contracts/EscrowAdvansed.json';
 
 // MetaCoin is our usable abstraction, which we'll use through the code below.
 var EscrowAdvansed = contract(escrow_artifacts);
+console.log('json');
+console.log(EscrowAdvansed);
 
-**/
 
 //require syntax.
 // Require our contract artifacts and turn them into usable abstractions.
-var json = require("../../build/contracts/EscrowAdvansed.json");
+//var json = require("../../build/contracts/EscrowAdvansed.json");
 
 // Turn our contract into an abstraction
-var contract = require("truffle-contract");
-var EscrowAdvansed = contract(json);
-console.log(EscrowAdvansed);
+//var contract = require("truffle-contract");
+//var EscrowAdvansed = contract(json);
+//console.log(EscrowAdvansed);
 // Step 3: Provision the contract with a web3 provider
 //EscrowAdvansed.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"));
 
@@ -66,7 +67,7 @@ window.App = {
 
       accounts = accs;
       account = accounts[0];
-      console.log(account);
+  //    console.log(account);
 
       //Here you can input some initial functions.
 
