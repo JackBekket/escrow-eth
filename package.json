@@ -30,14 +30,8 @@
     "json-loader": "^0.5.4",
     "style-loader": "^0.13.1",
     "truffle-contract": "^1.1.6",
-    "web3": "^0.17.0-alpha",
+    "web3": "^0.18.2",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0"
-  },
-  "dependencies": {
-    "truffle": "^3.1.2",
-    "truffle-contract": "^1.1.10",
-    "truffle-default-builder": "^2.0.0",
-    "web3": "^0.17.0-alpha"
   }
 }
