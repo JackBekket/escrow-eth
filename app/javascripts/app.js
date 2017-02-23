@@ -13,8 +13,7 @@
 // MetaCoin is our usable abstraction, which we'll use through the code below.
 var EscrowAdvansed = contract(escrow_artifacts);
 //console.log('json');
-console.log('artifacts');
-console.log(EscrowAdvansed);
+
 
 
 /**
@@ -98,17 +97,44 @@ window.App = {
     var self=this;
     var escr;
     var seller_addr;
+    var pos;
+    var msg;
+    var val1;
     EscrowAdvansed.deployed().then(function(instance) {
   //     MyEscrowInstance=instance;
        escr = instance;
-       console.log(escr.address);
+  //     console.log(escr.address);
        return escr.seller.call()
      }).then(function(seller){
          seller_addr = seller;
-         console.log(seller);
-         console.log(seller_addr);
-       }).then(function(value){
-         self.setStatusPos("#selleraddr1",value);
+    //     console.log(seller);
+    //     console.log(seller_addr);
+       }).then(function(){
+         //Here setup values
+      //   val1=accounts
+      //first section
+         $("#sellerarb1").val(accounts[2]);
+         pos="#selleraddr1";
+         msg=seller_addr;
+      //   console.log(msg);
+         self.setStatusPos(pos,msg);
+         //second Section
+         pos="#buyeraddr1";
+         msg=accounts[1];
+      //    msg="lool";
+      //   console.log(accounts[1]);
+      //   console.log(msg);
+         self.setStatusPos(pos,msg);
+         $("#inp2seller").val(accounts[0]);
+         //Section buyer
+         //Section single
+         pos="#selleraddr3";
+         msg=accounts[0];
+         self.setStatusPos(pos,msg);
+         //arbiter
+         //Продавцы
+         //Продавец
+
        }).catch(function(e) {
          console.log(e);
          self.setStatus("Error getting address; see log.");
@@ -131,6 +157,8 @@ window.App = {
 $(pos).html(msg);
 
 },
+
+
 
   //Пример блока
   someFunction: function (){
