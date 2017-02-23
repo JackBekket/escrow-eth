@@ -158,7 +158,45 @@ $(pos).html(msg);
 
 },
 
+  startEscrow: function () {
+    var self=this;
 
+    //version. 0-demo, 1-live
+    var ver=0;
+    //in live version must be replaced to accounts[0]
+    var _from=accounts[1];
+    //selleraddr1
+    var _to = $('#inp2seller').val();
+    var val1=$('#inp2amount').val();
+    console.log(val1);
+    var _amount = web3.toWei(val1);
+    console.log(_amount);
+    var desc=$('#inp2description').val();
+    console.log(desc);
+
+    var escr;
+    var pos;
+    var msg;
+
+    //Should get it from backend
+    var lockid=1;
+
+    EscrowAdvansed.deployed().then(function(instance) {
+       escr = instance;
+    return escr.start(lockid,desc,ver,{from:_from,value:_amount,gas: 3000000})
+     }).then(function() {
+       pos="#startStatus";
+       msg="Started!"
+       self.setStatusPos(pos,msg);
+       //function that refresh current buyer deals.
+    //   self.refreshBalance();
+     }).catch(function(e) {
+       console.log(e);
+       msg="Error starting escrow, see log";
+       self.setStatusPos(pos,msg);
+     });
+
+  },
 
   //Пример блока
   someFunction: function (){
