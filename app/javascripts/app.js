@@ -168,11 +168,11 @@ $(pos).html(msg);
     //selleraddr1
     var _to = $('#inp2seller').val();
     var val1=$('#inp2amount').val();
-    console.log(val1);
+//    console.log(val1);
     var _amount = web3.toWei(val1);
     console.log(_amount);
     var desc=$('#inp2description').val();
-    console.log(desc);
+//    console.log(desc);
 
     var escr;
     var pos;
@@ -184,7 +184,10 @@ $(pos).html(msg);
     EscrowAdvansed.deployed().then(function(instance) {
        escr = instance;
     return escr.start(lockid,desc,ver,{from:_from,value:_amount,gas: 3000000})
-     }).then(function() {
+  }).then(function(status) {
+      console.log("tx.status:");
+      console.log(status);
+
        pos="#startStatus";
        msg="Started!"
        self.setStatusPos(pos,msg);
