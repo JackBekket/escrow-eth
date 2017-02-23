@@ -90,27 +90,28 @@ window.App = {
 
     self.refreshAddress();
 
-/**
-   EscrowAdvanced.deployed().then(function(instance) {
-      MyEscrowInstance=instance;
 
-      console.log(instance.deployed_address);
-      console.log(EscrowAdvanced.deployed_address);
-      console.log(MyEscrowInstance);
-      return instance.seller.call({from:account});
-      });
-**/
 
   },
 
   refreshAddress: function(){
     var self=this;
     var escr;
+    var seller_addr;
     EscrowAdvansed.deployed().then(function(instance) {
   //     MyEscrowInstance=instance;
        escr = instance;
-       console.log(escr.address); }).catch(function(e) {
+       console.log(escr.address);
+       return escr.seller.call()
+     }).then(function(seller){
+         seller_addr = seller;
+         console.log(seller);
+         console.log(seller_addr);
+       }).then(function(value){
+         self.setStatusPos("#selleraddr1",value);
+       }).catch(function(e) {
          console.log(e);
+         self.setStatus("Error getting address; see log.");
     //   console.log(instance.deployed_address);
     //   console.log(EscrowAdvanced.deployed_address);
     //   console.log(MyEscrowInstance);
