@@ -109,7 +109,7 @@ window.App = {
     EscrowAdvansed.deployed().then(function(instance) {
   //     MyEscrowInstance=instance;
        escr = instance;
-       console.log(escr); }).catch(function(e) {
+       console.log(escr.address); }).catch(function(e) {
          console.log(e);
     //   console.log(instance.deployed_address);
     //   console.log(EscrowAdvanced.deployed_address);
