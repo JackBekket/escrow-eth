@@ -251,11 +251,21 @@ sellerInvoice: function(){
 
 // 1 -Start, see .sol for different status details.
     event=escr.LogEvent({eventType:1},{fromBlock: 0, toBlock: 'latest'});
-    console.log(event);
-    event.watch(function(error, result){
+  //  console.log(event);
+   event.watch(function(error, result){
       if (!error)
-        console.log(result);
-      });
+       console.log(result);
+    //    return result;
+    var apnd="  Buyer Address:<p> <span id='invoiceBuyerAddr'>0x00</span> \
+      Amount:<p> <span id='invoiceAmount'></span> \
+      Description:<p> <span id='invoiceDescription'></span> \
+      Status:<p> <span id='invoiceStatus'></span> \
+      <button id='invoiceAccept' onclick=''>Accept</button><button id='invoiceReject' onclick=''>Reject</button>"
+    //Here append
+    $( ".sInvoice" ).append(apnd);
+
+  });
+
       //Здесь можно вписать еще then и вставить действия.
   });
 //myEvent.stopWatching();
