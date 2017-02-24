@@ -268,7 +268,7 @@ sellerInvoice: function(){
 
        // c -amount, e - decimals
        //amount store in Wei format.
-  
+
        var amount=result.args.payment;
 
        var amnt=web3.fromWei(amount);
@@ -279,7 +279,7 @@ sellerInvoice: function(){
     Buyer Address:<p> <span id='invoiceBuyerAddr'>"+buyadr+"</span> </br>\
       Amount:<p> <span id='invoiceAmount'>"+amnt+"</span> </br>\
       Description:<p> <span id='invoiceDescription'>"+descr+"</span></br> \
-      <button id='invoiceAccept' onclick=''>Accept</button><button id='invoiceReject' onclick=''>Reject</button> \
+      <button id='invoiceAccept' onclick='App.invoiceAccept("+lock_s+")'>Accept</button><button id='invoiceReject' onclick=''>Reject</button> \
       </div>";
     //Here append
     $( ".sInvoice" ).append(apnd);
@@ -287,13 +287,121 @@ sellerInvoice: function(){
 
   });
 
-      //Здесь можно вписать еще then и вставить действия.
+
   });
 //myEvent.stopWatching();
 
 },
 
 
+  invoiceAccept: function (lockid) {
+    var self=this;
+    var escr;
+    var lockidd=lockid;
+//ver 0 - demo
+    var ver=0;
+
+// comment
+    var comment;
+    comment = "I will do it!";
+
+    EscrowAdvansed.deployed().then(function(instance) {
+       escr = instance;
+    //   return escr.start(lockid,desc,ver,{from:_from,value:_amount,gas: 3000000})
+       return escr.accept(lockidd,comment,ver,{from:account,gas: 3000000})
+     }).then(function(status){
+         console.log("tx.accept.status");
+         console.log(status);
+       }).catch(function(e) {
+           console.log(e);
+        //   msg="Error starting escrow, see log";
+        //   self.setStatusPos(pos,msg);
+         });
+         /**
+
+         EscrowAdvansed.deployed().then(function(instance) {
+            escr = instance;
+         return escr.start(lockid,desc,ver,{from:_from,value:_amount,gas: 3000000})
+       }).then(function(status) {
+           console.log("tx.status:");
+           console.log(status);
+
+            pos="#startStatus";
+            msg="Started!"
+            self.setStatusPos(pos,msg);
+            lockid=lockid+1;
+            //function that refresh current buyer deals.
+         //   self.refreshBalance();
+          }).catch(function(e) {
+            console.log(e);
+            msg="Error starting escrow, see log";
+            self.setStatusPos(pos,msg);
+          });
+
+                pos="#startStatus";
+                msg="Started!"
+                self.setStatusPos(pos,msg);
+         **/
+
+
+
+
+  },
+
+
+sellerCurrent: function(){
+
+
+
+  var self=this;
+  var escr;
+
+  EscrowAdvansed.deployed().then(function(instance) {
+     escr = instance;
+
+
+// 2 -Accepted, see .sol for different status details.
+    event=escr.LogEvent({eventType:2},{fromBlock: 0, toBlock: 'latest'});
+  //  console.log(event);
+   event.watch(function(error, result){
+      if (!error)
+       console.log(result);
+    //   console.log(result.args.dataInfo);
+       var descr=result.args.dataInfo;
+
+       var lock=result.args.lockId.c;
+       var lock_s=lock.join();
+
+       var buyadr=result.args.sender;
+
+       // c -amount, e - decimals
+       //amount store in Wei format.
+
+       var amount=result.args.payment;
+
+       var amnt=web3.fromWei(amount);
+
+
+    //    return result;
+    var apnd="   <br> \
+    <label for='Buyer address'>Buyer address: <span id='buyeraddr2'>0x0...</span> \
+    <br> \
+      Amount:<p> <span id='currentAmount'></span> \
+      Description:<p> <span id='currentDescr'></span> \
+      Status:<p> <span id='currentStatus'></span> \
+      <button id='sellerDone' onclick=''>Done</button><button id='sellerCancel' onclick=''>Cancel</button><button id='sellerArbiter' onclick=''>Arbiter</button><p> \
+      ";
+    //Here append
+    $( ".sCurrent" ).append(apnd);
+
+
+  });
+
+
+  });
+//myEvent.stopWatching();
+
+},
 
 
   //Пример блока
