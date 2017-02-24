@@ -16,14 +16,6 @@ var EscrowAdvansed = contract(escrow_artifacts);
 
 
 
-/**
- EscrowAdvanced.deployed().then(function(instance) {
-    MyEscrowInstance=instance;
-    console.log(instance.deployed_address);
-    console.log(EscrowAdvanced.deployed_address);
-    console.log(MyEscrowInstance);
-    });
-**/
 
 
 //var contract = require('truffle-contract');
@@ -91,6 +83,8 @@ window.App = {
 //    event.stopWatching();
     self.refreshAddress();
     self.sellerInvoice();
+//    event.stopWatching();
+    self.sellerCurrent();
 
 
 
@@ -234,9 +228,10 @@ $(pos).html(msg);
 
  });
  //Функция которая должна быть вызвана после размещения нового контракта.
- event.stopWatching();
+ //event.stopWatching();
  App.start();
  App.sellerInvoice();
+ App.sellerCurrent();
 
 
   },
@@ -251,14 +246,23 @@ sellerInvoice: function(){
   EscrowAdvansed.deployed().then(function(instance) {
      escr = instance;
 
-
+//     var dataInfo1="WoW!";
 // 1 -Start, see .sol for different status details.
-    event=escr.LogEvent({eventType:1},{fromBlock: 0, toBlock: 'latest'});
+//-------BUG REPORTING
+//Strange behavior of web3.event I can't parse specific data. That's why it will
+//request whole Event and parse it after. Yes, it is not optimized, but it works for now.
+//    event=escr.LogEvent({lockId:1,dataInfo:dataInfo1},{fromBlock: 0, toBlock: 'latest'});
+      event=escr.LogEvent({},{fromBlock: 0, toBlock: 'latest'});
   //  console.log(event);
    event.watch(function(error, result){
       if (!error)
        console.log(result);
     //   console.log(result.args.dataInfo);
+
+      if(result.args.eventType.c==1){
+
+
+
        var descr=result.args.dataInfo;
 
        var lock=result.args.lockId.c;
@@ -283,7 +287,7 @@ sellerInvoice: function(){
       </div>";
     //Here append
     $( ".sInvoice" ).append(apnd);
-
+}
 
   });
 
@@ -314,37 +318,8 @@ sellerInvoice: function(){
          console.log(status);
        }).catch(function(e) {
            console.log(e);
-        //   msg="Error starting escrow, see log";
-        //   self.setStatusPos(pos,msg);
+
          });
-         /**
-
-         EscrowAdvansed.deployed().then(function(instance) {
-            escr = instance;
-         return escr.start(lockid,desc,ver,{from:_from,value:_amount,gas: 3000000})
-       }).then(function(status) {
-           console.log("tx.status:");
-           console.log(status);
-
-            pos="#startStatus";
-            msg="Started!"
-            self.setStatusPos(pos,msg);
-            lockid=lockid+1;
-            //function that refresh current buyer deals.
-         //   self.refreshBalance();
-          }).catch(function(e) {
-            console.log(e);
-            msg="Error starting escrow, see log";
-            self.setStatusPos(pos,msg);
-          });
-
-                pos="#startStatus";
-                msg="Started!"
-                self.setStatusPos(pos,msg);
-         **/
-
-
-
 
   },
 
@@ -361,12 +336,14 @@ sellerCurrent: function(){
 
 
 // 2 -Accepted, see .sol for different status details.
-    event=escr.LogEvent({eventType:2},{fromBlock: 0, toBlock: 'latest'});
+    event=escr.LogEvent({},{fromBlock: 0, toBlock: 'latest'});
   //  console.log(event);
    event.watch(function(error, result){
       if (!error)
        console.log(result);
     //   console.log(result.args.dataInfo);
+    if(result.args.eventType.c==1){
+
        var descr=result.args.dataInfo;
 
        var lock=result.args.lockId.c;
@@ -384,16 +361,16 @@ sellerCurrent: function(){
 
     //    return result;
     var apnd="   <br> \
-    <label for='Buyer address'>Buyer address: <span id='buyeraddr2'>0x0...</span> \
+    <label for='Buyer address'>"+buyadr+" <span id='buyeraddr2'>0x0...</span> \
     <br> \
-      Amount:<p> <span id='currentAmount'></span> \
-      Description:<p> <span id='currentDescr'></span> \
+      Amount:<p> <span id='currentAmount'>"+amnt+"</span> \
+      Description:<p> <span id='currentDescr'>"+descr+"</span> \
       Status:<p> <span id='currentStatus'></span> \
       <button id='sellerDone' onclick=''>Done</button><button id='sellerCancel' onclick=''>Cancel</button><button id='sellerArbiter' onclick=''>Arbiter</button><p> \
       ";
     //Here append
     $( ".sCurrent" ).append(apnd);
-
+}
 
   });
 
