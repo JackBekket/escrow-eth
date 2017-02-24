@@ -268,10 +268,11 @@ sellerInvoice: function(){
        console.log(buyadr);
        // c -amount, e - decimals
        //amount store in Wei format.
-       var amount=result.args.payment.c;
-       var amount_s=amount.join();
+  //     var amount=result.args.payment.c;
+       var amount=result.args.payment;
+    //   var amount_s=amount.join();
   //     console.log(amount_s);
-       var amnt=web3.fromWei(amount_s);
+       var amnt=web3.fromWei(amount);
        console.log(amnt);
 
     //    return result;
