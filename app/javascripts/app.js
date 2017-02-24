@@ -54,7 +54,7 @@ var accounts;
 var account;
 
 
-
+var event;
 
 
 window.App = {
@@ -88,7 +88,7 @@ window.App = {
     });
 
     self.refreshAddress();
-  //  self.sellerInvoice();
+    self.sellerInvoice();
 
 
 
@@ -231,6 +231,7 @@ $(pos).html(msg);
 
  });
  //Функция которая должна быть вызвана после размещения нового контракта.
+ event.stopWatching();
  App.start();
  App.sellerInvoice();
 
@@ -239,27 +240,29 @@ $(pos).html(msg);
 
 sellerInvoice: function(){
 
+
+
   var self=this;
   var escr;
 
   EscrowAdvansed.deployed().then(function(instance) {
      escr = instance;
-     /**
-     var event = myContractInstance.MyEvent([{valueA: 23}] [, additionalFilterObject] , function(error, result){
-  if (!error)
-    console.log(result);
-});
-**/
+
 
 // 1 -Start, see .sol for different status details.
-    var event=escr.LogEvent({eventType:1},{fromBlock: 0, toBlock: 'latest'}, function(error, result) {
+    event=escr.LogEvent({eventType:1},{fromBlock: 0, toBlock: 'latest'});
+    console.log(event);
+    event.watch(function(error, result){
       if (!error)
         console.log(result);
-    });
+      });
+      //Здесь можно вписать еще then и вставить действия.
   });
-
+//myEvent.stopWatching();
 
 },
+
+
 
 
   //Пример блока
