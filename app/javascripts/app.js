@@ -381,17 +381,7 @@ sellerCurrent: function(){
 },
 
 
-  //Пример блока
-  someFunction: function (){
-    var self = this;
-    var amount = $('#transfer_am').val();
-    var to = $("#transfer_to").val();
-  this.setStatus("Initiating transaction... (please wait)");
-    alert("this work");
-  }
 
-
-//payload functions.
 
 
 
