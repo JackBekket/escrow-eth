@@ -258,12 +258,18 @@ sellerInvoice: function(){
    event.watch(function(error, result){
       if (!error)
        console.log(result);
-       console.log(result.args.dataInfo);
+    //   console.log(result.args.dataInfo);
+       var descr=result.args.dataInfo;
+       var lock=result.args.lockid.c;
+       console.log(lock);
+       var buyadr=result.args.sender;
+       console.log(buyadr);
+       var amount=result.args.payment.c;
     //    return result;
-    var apnd="  Buyer Address:<p> <span id='invoiceBuyerAddr'>0x00</span> \
-      Amount:<p> <span id='invoiceAmount'></span> \
-      Description:<p> <span id='invoiceDescription'></span> \
-      Status:<p> <span id='invoiceStatus'></span> \
+    var apnd="  Buyer Address:<p> <span id='invoiceBuyerAddr'>0x00</span> </br>\
+      Amount:<p> <span id='invoiceAmount'></span> </br>\
+      Description:<p> <span id='invoiceDescription'>"+descr+"</span></br> \
+      Status:<p> <span id='invoiceStatus'></span> </br>\
       <button id='invoiceAccept' onclick=''>Accept</button><button id='invoiceReject' onclick=''>Reject</button>"
     //Here append
     $( ".sInvoice" ).append(apnd);
