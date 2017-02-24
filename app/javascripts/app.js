@@ -270,14 +270,17 @@ sellerInvoice: function(){
        //amount store in Wei format.
        var amount=result.args.payment.c;
        var amount_s=amount.join();
-       console.log(amount_s);
+  //     console.log(amount_s);
+       var amnt=web3.fromWei(amount_s);
+       console.log(amnt);
 
     //    return result;
-    var apnd="  Buyer Address:<p> <span id='invoiceBuyerAddr'>0x00</span> </br>\
-      Amount:<p> <span id='invoiceAmount'></span> </br>\
+    var apnd="  <div class='sInv_in' id='"+lock_s+"'> \
+    Buyer Address:<p> <span id='invoiceBuyerAddr'>"+buyadr+"</span> </br>\
+      Amount:<p> <span id='invoiceAmount'>"+amnt+"</span> </br>\
       Description:<p> <span id='invoiceDescription'>"+descr+"</span></br> \
-      Status:<p> <span id='invoiceStatus'></span> </br>\
-      <button id='invoiceAccept' onclick=''>Accept</button><button id='invoiceReject' onclick=''>Reject</button>"
+      <button id='invoiceAccept' onclick=''>Accept</button><button id='invoiceReject' onclick=''>Reject</button> \
+      </div>";
     //Here append
     $( ".sInvoice" ).append(apnd);
 
