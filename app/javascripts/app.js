@@ -342,7 +342,7 @@ sellerCurrent: function(){
       if (!error)
        console.log(result);
     //   console.log(result.args.dataInfo);
-    if(result.args.eventType.c==1){
+    if(result.args.eventType.c==2){
 
        var descr=result.args.dataInfo;
 
