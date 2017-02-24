@@ -1,14 +1,14 @@
 {
-  "name": "truffle-init-webpack",
+  "name": "Ethereum-EscrowAdvansed",
   "version": "0.0.1",
-  "description": "Frontend example using truffle v3",
+  "description": "Frontend of EscrowAdvansed",
   "scripts": {
     "lint": "eslint ./",
     "build": "webpack",
     "dev": "webpack-dev-server"
   },
-  "author": "Douglas von Kohorn",
-  "license": "MIT",
+  "author": "Sergey Ponomarev",
+
   "devDependencies": {
     "babel-cli": "^6.22.2",
     "babel-core": "^6.22.1",
