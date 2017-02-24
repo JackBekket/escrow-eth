@@ -56,6 +56,8 @@ var account;
 
 var event;
 
+//This should be get from backend!!!!!!
+var lockid=1;
 
 window.App = {
   start: function() {
@@ -86,7 +88,7 @@ window.App = {
       //Here you can input some initial functions.
 
     });
-
+//    event.stopWatching();
     self.refreshAddress();
     self.sellerInvoice();
 
@@ -177,7 +179,7 @@ $(pos).html(msg);
     var msg;
 
     //Should get it from backend
-    var lockid=1;
+  //  var lockid=1;
 
     EscrowAdvansed.deployed().then(function(instance) {
        escr = instance;
@@ -189,6 +191,7 @@ $(pos).html(msg);
        pos="#startStatus";
        msg="Started!"
        self.setStatusPos(pos,msg);
+       lockid=lockid+1;
        //function that refresh current buyer deals.
     //   self.refreshBalance();
      }).catch(function(e) {
@@ -255,6 +258,7 @@ sellerInvoice: function(){
    event.watch(function(error, result){
       if (!error)
        console.log(result);
+       console.log(result.args.dataInfo);
     //    return result;
     var apnd="  Buyer Address:<p> <span id='invoiceBuyerAddr'>0x00</span> \
       Amount:<p> <span id='invoiceAmount'></span> \
@@ -263,6 +267,7 @@ sellerInvoice: function(){
       <button id='invoiceAccept' onclick=''>Accept</button><button id='invoiceReject' onclick=''>Reject</button>"
     //Here append
     $( ".sInvoice" ).append(apnd);
+
 
   });
 
