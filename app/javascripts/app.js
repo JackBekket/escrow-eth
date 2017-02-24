@@ -88,6 +88,7 @@ window.App = {
     });
 
     self.refreshAddress();
+  //  self.sellerInvoice();
 
 
 
@@ -101,7 +102,7 @@ window.App = {
     var msg;
     var val1;
     EscrowAdvansed.deployed().then(function(instance) {
-  //     MyEscrowInstance=instance;
+
        escr = instance;
   //     console.log(escr.address);
        return escr.seller.call()
@@ -138,10 +139,7 @@ window.App = {
        }).catch(function(e) {
          console.log(e);
          self.setStatus("Error getting address; see log.");
-    //   console.log(instance.deployed_address);
-    //   console.log(EscrowAdvanced.deployed_address);
-    //   console.log(MyEscrowInstance);
-    //   return instance.seller.call({from:account});
+
   });
 
   },
@@ -234,9 +232,35 @@ $(pos).html(msg);
  });
  //Функция которая должна быть вызвана после размещения нового контракта.
  App.start();
+ App.sellerInvoice();
 
 
   },
+
+sellerInvoice: function(){
+
+  var self=this;
+  var escr;
+
+  EscrowAdvansed.deployed().then(function(instance) {
+     escr = instance;
+     /**
+     var event = myContractInstance.MyEvent([{valueA: 23}] [, additionalFilterObject] , function(error, result){
+  if (!error)
+    console.log(result);
+});
+**/
+
+// 1 -Start, see .sol for different status details.
+    var event=escr.LogEvent({eventType:1},{fromBlock: 0, toBlock: 'latest'}, function(error, result) {
+      if (!error)
+        console.log(result);
+    });
+  });
+
+
+},
+
 
   //Пример блока
   someFunction: function (){
@@ -314,4 +338,5 @@ window.addEventListener('load', function() {
   }
 
   App.start();
+//  App.sellerInvoice();
 });
