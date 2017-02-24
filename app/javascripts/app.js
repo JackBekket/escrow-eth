@@ -260,20 +260,19 @@ sellerInvoice: function(){
        console.log(result);
     //   console.log(result.args.dataInfo);
        var descr=result.args.dataInfo;
-       console.log(descr);
+
        var lock=result.args.lockId.c;
        var lock_s=lock.join();
-       console.log(lock_s);
+
        var buyadr=result.args.sender;
-       console.log(buyadr);
+
        // c -amount, e - decimals
        //amount store in Wei format.
-  //     var amount=result.args.payment.c;
+  
        var amount=result.args.payment;
-    //   var amount_s=amount.join();
-  //     console.log(amount_s);
+
        var amnt=web3.fromWei(amount);
-       console.log(amnt);
+
 
     //    return result;
     var apnd="  <div class='sInv_in' id='"+lock_s+"'> \
