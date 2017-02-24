@@ -260,11 +260,18 @@ sellerInvoice: function(){
        console.log(result);
     //   console.log(result.args.dataInfo);
        var descr=result.args.dataInfo;
-       var lock=result.args.lockid.c;
-       console.log(lock);
+       console.log(descr);
+       var lock=result.args.lockId.c;
+       var lock_s=lock.join();
+       console.log(lock_s);
        var buyadr=result.args.sender;
        console.log(buyadr);
+       // c -amount, e - decimals
+       //amount store in Wei format.
        var amount=result.args.payment.c;
+       var amount_s=amount.join();
+       console.log(amount_s);
+
     //    return result;
     var apnd="  Buyer Address:<p> <span id='invoiceBuyerAddr'>0x00</span> </br>\
       Amount:<p> <span id='invoiceAmount'></span> </br>\
