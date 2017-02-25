@@ -49,7 +49,7 @@ var account;
 var event;
 
 //This should be get from backend!!!!!!
-var lockid=0;
+//var lockid=0;
 
 window.App = {
   start: function() {
@@ -173,6 +173,7 @@ $(pos).html(msg);
     var escr;
     var pos;
     var msg;
+    var lockid=0;
 
     //Should get it from backend
   //  var lockid=1;
@@ -181,7 +182,7 @@ $(pos).html(msg);
      var i;
 
 
-       for(i=0;; i++) {
+       for(i=0;;i++) {
     return escr.escrows(i)
     //   console.log(result);
       console.log("result");
