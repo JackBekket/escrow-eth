@@ -450,23 +450,43 @@ buyerDeal: function(){
 
   EscrowAdvansed.deployed().then(function(instance) {
      escr = instance;
-     return escr.escrows(1)
+    // return escr.escrows(1)
+    // 5 -Done, see .sol for different status details.
+        event=escr.LogEvent({},{fromBlock: 0, toBlock: 'latest'});
+      //  console.log(event);
+       event.watch(function(error, result){
 
-}).then(function(EscrowsArr) {
-//  console.log(EscrowsArr);
-  var obj=EscrowsArr[2];
-//  console.log(obj.c);
-  var arr=obj.c;
-//  console.log(arr[0]);
+         if(result.args.eventType.c==5){
+
+
+           var descr=result.args.dataInfo;
+
+           var lock=result.args.lockId.c;
+           var lock_s=lock.join();
+
+           var buyadr=result.args.sender;
+
+           // c -amount, e - decimals
+           //amount store in Wei format.
+
+           var amount=result.args.payment;
+
+           var amnt=web3.fromWei(amount);
+
+
   var apnd="\
-  Lock id:<p> <span id='buyer2lockid'></span> \
-  Amount:<p> <span id='buyer2amount'></span> \
-  Description:<p><span id='buyer2Description'></span> \
+  Lock id:<p> <span id='buyer2lockid'>"+lock_s+"</span> \
+  Amount:<p> <span id='buyer2amount'>"+amnt+"</span> \
+  Description:<p><span id='buyer2Description'>"+descr+"</span> \
   Status:<p><span id='buyer2Status'></span> \
   <p><button id='buyer2Submit' onclick=''>Submit</button><button id='buyer2Arbiter' onclick=''>Arbiter</button></p> \
   ";
-});
+  $( ".buyer2" ).append(apnd);
+}
 
+
+});
+});
 
 },
 

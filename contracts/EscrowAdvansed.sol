@@ -35,6 +35,7 @@ contract EscrowAdvansed {
   uint16 constant internal Start = 1;
   uint16 constant internal Accept = 2;
   uint16 constant internal Reject = 3;
+  uint16 constant internal Done = 5;
   uint16 constant internal Cancel = 4;
   uint16 constant internal Description = 10;
   uint16 constant internal Unlock = 11;
@@ -457,6 +458,13 @@ function accept(uint _lockId, string _dataInfo, uint _version) onlyOwner {
 
 //Accept order to event log
     LogEvent(_lockId, _dataInfo, _version, Accept, msg.sender, info.lockedFunds);
+}
+
+function done(uint _lockId, string _dataInfo, uint _version) onlyOwner{
+
+  EscrowInfo info = escrows[_lockId];
+  
+  LogEvent(_lockId, _dataInfo, _version, Done, msg.sender, info.lockedFunds);
 }
 
 //Reject functions means that seller denied start deal from buyer.
