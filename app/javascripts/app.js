@@ -655,11 +655,14 @@ ArbSeller: function() {
            console.log(seller_addr);
 
   var apnd="\
+  <div id='arbiter2"+lock_s+"'>  \
+  Seller: <span id='a2s"+lock_s+"'>"+seller_addr+"</span> \
   Amount:<p><span id='arbiter2Amount'>"+amnt+"</span> \
   Description:<p><span id='arbiter2Description'>"+descr+"</span> \
   Lock id:<p><span id='arbiter2Lockid'>"+lock_s+"</span> \
-  Buyer:<p><span id='arbiter2Buyer'>"+buyadr+"</span> \
-  Withdraw to:<button type='button' id='arbiter2Seller' onclick='App.arbYes("+lock_s+","+seller_addr+","+amnt+")'>Seller</button><button type='button' id='arbiter2Buyer' onclick='App.arbYes("+lock_s+","+buyadr+","+amnt+")'>Buyer</button><p> \
+  Buyer:<p><span id='a2b"+lock_s+"'>"+buyadr+"</span> \
+  Withdraw to:<button type='button' id='arbiter2Seller' onclick='App.arbYes("+lock_s+",1,"+amnt+")'>Seller</button><button type='button' id='arbiter2Buyer' onclick='App.arbYes("+lock_s+",2,"+amnt+")'>Buyer</button><p> \
+   </div>  \
   ";
   $( ".arbiter2" ).append(apnd);
 }
@@ -670,7 +673,7 @@ ArbSeller: function() {
 
 },
 
-arbYes: function (lockid,who,payment) {
+arbYes: function (lockid,choice,payment) {
   var self=this;
   var escr;
   var lockidd=lockid;
@@ -678,8 +681,18 @@ arbYes: function (lockid,who,payment) {
 console.log("lokidd");
 console.log(lockidd);
   var ver=0;
-  console.log("who");
-  console.log(who);
+  var who;
+  var selector;
+  if (choice==1){
+  selector="a2s"+lockidd;
+  console.log("selector1");
+}
+  if(choice==2){
+    selector="a2b"+lockidd;
+    console.log("selector2");
+
+  }
+  who=$("#"+selector).html();
   var _who=who;
   console.log("_who");
   console.log(_who);
