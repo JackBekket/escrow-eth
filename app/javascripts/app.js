@@ -18,28 +18,6 @@ var EscrowAdvansed = contract(escrow_artifacts);
 
 
 
-//var contract = require('truffle-contract');
-
-//require syntax.
-// Require our contract artifacts and turn them into usable abstractions.
-//var json0 = require("./build/contracts/BasicToken.json");
-//var json = require('../../build/contracts/EscrowAdvansed.json');
-//var json2 = require('./contracts/EscrowAdvansed.json');
-//var Web3 = require('web3');
-// Turn our contract into an abstraction
-
-//var EscrowAdvansed = contract(json);
-//console.log(EscrowAdvansed);
-// Step 3: Provision the contract with a web3 provider
-//EscrowAdvansed.setProvider(new Web3.providers.HttpProvider("http://localhost:8545"));
-
-/**
-// Step 4: Use the contract!
-EscrowAdvansed.deployed().then(function(deployed) {
-  return deployed.someFunction();
-});
-**/
-
 
 // For application bootstrapping, check out window.addEventListener below.
 var accounts;
@@ -51,6 +29,11 @@ var event;
 //This should be get from backend!!!!!!
 var global_lockid=0;
 //window.lockid=0;
+
+//And this one too.
+var global_status ={};
+
+
 
 window.App = {
   start: function() {
@@ -411,7 +394,8 @@ sellerInvoice: function(){
 
 sellerCurrent: function(){
 
-
+  var lock;
+  var lock_s;
 
   var self=this;
   var escr;
@@ -424,38 +408,60 @@ sellerCurrent: function(){
     event=escr.LogEvent({},{fromBlock: 0, toBlock: 'latest'});
   //  console.log(event);
    event.watch(function(error, result){
-    //  if (!error)
-    //   console.log(result);
+      if (!error)
+       console.log(result);
 
     if(result.args.eventType.c==2){
 
        var descr=result.args.dataInfo;
 
-       var lock=result.args.lockId.c;
-       var lock_s=lock.join();
-
-       var buyadr=result.args.sender;
-
-       // c -amount, e - decimals
-       //amount store in Wei format.
-
-       var amount=result.args.payment;
-
-       var amnt=web3.fromWei(amount);
-
-
-    //    return result;
-    var apnd="   <br> \
-    <label for='Buyer address'>"+buyadr+" <span id='buyeraddr2'>0x0...</span> \
-    <br> \
-      Amount:<p> <span id='currentAmount'>"+amnt+"</span> \
-      Description:<p> <span id='currentDescr'>"+descr+"</span> \
-      Status:<p> <span id='currentStatus'></span> \
-      <button id='sellerDone' onclick='App.currentDone("+lock_s+")'>Done</button><button id='sellerCancel' onclick='App.invoiceReject("+lock_s+")'>Cancel</button> \
-      ";
-    //Here append
-    $( ".sCurrent" ).append(apnd);
+        lock=result.args.lockId.c;
+        lock_s=lock.join();
+        console.log("eventType lock");
+        console.log(lock_s);
 }
+      console.log("out if log");
+      console.log(lock_s);
+      var stat;
+      self.getStatus(lock_s).then(function () {
+         stat=global_status.lockid;
+        console.log("stat:");
+        console.log(stat);
+        console.log("global_status");
+        console.log(global_status.lockid);
+      });
+
+
+        if(stat==2){
+          log("stat is 2")
+         var buyadr=result.args.sender;
+
+         // c -amount, e - decimals
+         //amount store in Wei format.
+
+         var amount=result.args.payment;
+
+         var amnt=web3.fromWei(amount);
+
+
+      //    return result;
+      var apnd="   <div id='lock_s'>  \
+      <br> \
+      <label for='Buyer address'>"+buyadr+" <span id='buyeraddr2'>0x0...</span> \
+      <br> \
+        Amount:<p> <span id='currentAmount'>"+amnt+"</span> \
+        Description:<p> <span id='currentDescr'>"+descr+"</span> \
+        Status:<p> <span id='currentStatus'></span> \
+        <button id='sellerDone' onclick='App.currentDone("+lock_s+")'>Done</button><button id='sellerCancel' onclick='App.invoiceReject("+lock_s+")'>Cancel</button> \
+        </div>  \
+        ";
+      //Here append
+      $( ".sCurrent" ).append(apnd);
+}
+
+
+
+
 
   });
 
@@ -464,6 +470,42 @@ sellerCurrent: function(){
 //myEvent.stopWatching();
 
 },
+
+getStatus: function (lockid) {
+
+    var self=this;
+    var escr;
+    var lock=lockid;
+    lock=Number(lock);
+    console.log("lock");
+    console.log(lock);
+  //  var status;
+    EscrowAdvansed.deployed().then(function(instance) {
+       escr = instance;
+
+
+  // 2 -Accepted, see .sol for different status details.
+      event=escr.LogEvent({lockId:lock},{fromBlock: 0, toBlock: 'latest'});
+    //  console.log(event);
+     event.watch(function(error, result){
+      //  if (!error)
+      //   console.log(result);
+      var status;
+      status=result.args.eventType.c;
+
+      console.log("status cycle");
+      console.log(status[0]);
+      global_status.lockid=status[0];
+      console.log(global_status.lockid);
+
+    });
+
+
+    });
+
+},
+
+
 
 currentDone: function (lockid) {
   var self=this;
@@ -650,9 +692,9 @@ ArbSeller: function() {
 
            var amnt=web3.fromWei(amount);
 
-           console.log("seller_addr before transmission");
+    //       console.log("seller_addr before transmission");
         //   seller_addr=web3.sha3(seller_addr);
-           console.log(seller_addr);
+    //       console.log(seller_addr);
 
   var apnd="\
   <div id='arbiter2"+lock_s+"'>  \
@@ -726,14 +768,15 @@ logdebug: function () {
         event=escr.LogDebug({},{fromBlock: 0, toBlock: 'latest'});
       //  console.log(event);
        event.watch(function(error, result){
-
-         console.log(result);
+         var r1=JSON.stringify(result);
+         console.log(r1);
 });
 
 
 });
 
 }
+
 
 
 
