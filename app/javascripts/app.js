@@ -88,7 +88,7 @@ window.App = {
     self.sellerCurrent();
 
     self.buyerDeal();
-
+    self.ArbSeller();
     self.logdebug();
 
   //  console.log("window.lokid:");
@@ -506,14 +506,14 @@ buyerDeal: function(){
        escr = instance;
 
 
-  // 2 -Accepted, see .sol for different status details.
+  // 5 -Done, see .sol for different status details.
       event=escr.LogEvent({},{fromBlock: 0, toBlock: 'latest'});
     //  console.log(event);
      event.watch(function(error, result){
       //  if (!error)
       //   console.log(result);
 
-      if(result.args.eventType.c==2){
+      if(result.args.eventType.c==5){
 
          var descr=result.args.dataInfo;
 
@@ -537,7 +537,7 @@ buyerDeal: function(){
         Amount:<p> <span id='currentAmount'>"+amnt+"</span> \
         Description:<p> <span id='currentDescr'>"+descr+"</span> \
         Status:<p> <span id='currentStatus'></span> \
-        <button type='button' id='sellerDone' onclick='App.currentDone("+lock_s+")'>Done</button><button id='sellerCancel' onclick='App.invoiceReject("+lock_s+")'>Cancel</button> \
+        <button type='button' id='buyerSubmit' onclick='App.buyerYes("+lock_s+")'>Submit</button><button type='button' id='sellerCancel' onclick='App.buyerNo("+lock_s+")'>Cancel</button> \
         ";
       //Here append
       $( "#b2" ).append(apnd)
@@ -655,7 +655,7 @@ ArbSeller: function() {
   Description:<p><span id='arbiter2Description'>"+descr+"</span> \
   Lock id:<p><span id='arbiter2Lockid'>"+lock_s+"</span> \
   Buyer:<p><span id='arbiter2Buyer'>"+buyadr+"</span> \
-  Withdraw to:<button id='arbiter2Seller' onclick='App.arbYes("+lock_s+","+seller_addr+","+amnt+")'>Seller</button><button id='arbiter2Buyer' onclick='App.arbYes("+lock_s+","+buyadr+","+amnt+")'>Buyer</button><p> \
+  Withdraw to:<button type='button' id='arbiter2Seller' onclick='App.arbYes("+lock_s+","+seller_addr+","+amnt+")'>Seller</button><button type='button' id='arbiter2Buyer' onclick='App.arbYes("+lock_s+","+buyadr+","+amnt+")'>Buyer</button><p> \
   ";
   $( ".arbiter2" ).append(apnd);
 }
