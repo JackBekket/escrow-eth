@@ -532,7 +532,7 @@ buyerDeal: function(){
   Amount:<p> <span id='buyer2amount'>"+amnt+"</span> \
   Description:<p><span id='buyer2Description'>"+descr+"</span> \
   Status:<p><span id='buyer2Status'></span> \
-  <p><button id='buyer2Submit' onclick='App.buyerYes("+lock_s+")'>Submit</button><button id='buyer2Arbiter' onclick='App.buyerNo("+lock_s+")'>Arbiter</button></p> \
+  <p><button id='buyer2Done' onclick='App.buyerYes("+lock_s+")'>Submit</button><button id='buyer2Arbiter' onclick='App.buyerNo("+lock_s+")'>Arbiter</button></p> \
   ";
   $( ".buyer2" ).append(apnd);
 }
@@ -557,12 +557,11 @@ buyerYes: function (lockid) {
 // comment
   var comment;
   comment = "Good Job!";
-
+  console.log(comment);
   EscrowAdvansed.deployed().then(function(instance) {
-    console.log("instanceOK");
      escr = instance;
-  //   return escr.start(lockid,desc,ver,{from:_from,value:_amount,gas: 3000000})
-     return escr.yes(lockidd,comment,ver,{from:accounts[2],gas: 3000000})
+     console.log("instanceOK");
+     return escr.done(lockidd,comment,ver,{from:accounts[0],gas: 3000000})
    }).then(function(status){
        console.log("tx.accept.status");
        console.log(status);
@@ -570,6 +569,31 @@ buyerYes: function (lockid) {
          console.log(e);
 
        });
+
+       /**
+       var self=this;
+       var escr;
+       var lockidd=lockid;
+     //ver 0 - demo
+       var ver=0;
+
+     // comment
+       var comment;
+       comment = "Job's Done!";
+
+       EscrowAdvansed.deployed().then(function(instance) {
+          escr = instance;
+
+          return escr.done(lockidd,comment,ver,{from:account,gas: 3000000})
+        }).then(function(status){
+            console.log("tx.accept.status");
+            console.log(status);
+          }).catch(function(e) {
+              console.log(e);
+
+            });
+            **/
+
 
 },
 
