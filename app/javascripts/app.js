@@ -89,7 +89,7 @@ window.App = {
 
     self.buyerDeal();
 
-
+    self.logdebug();
 
   //  console.log("window.lokid:");
   //  console.log(window.lokid);
@@ -532,7 +532,7 @@ buyerDeal: function(){
   Amount:<p> <span id='buyer2amount'>"+amnt+"</span> \
   Description:<p><span id='buyer2Description'>"+descr+"</span> \
   Status:<p><span id='buyer2Status'></span> \
-  <p><button id='buyer2Submit' onclick='buyerYes("+lock_s+")'>Submit</button><button id='buyer2Arbiter' onclick='buyerNo("+lock_s+")'>Arbiter</button></p> \
+  <p><button id='buyer2Submit' onclick='App.buyerYes("+lock_s+")'>Submit</button><button id='buyer2Arbiter' onclick='App.buyerNo("+lock_s+")'>Arbiter</button></p> \
   ";
   $( ".buyer2" ).append(apnd);
 }
@@ -550,14 +550,19 @@ buyerYes: function (lockid) {
 //ver 0 - demo
   var ver=0;
 
+  console.log("buyerYes init");
+  console.log("lockid get");
+  console.log(lockidd);
+
 // comment
   var comment;
   comment = "Good Job!";
 
   EscrowAdvansed.deployed().then(function(instance) {
+    console.log("instanceOK");
      escr = instance;
   //   return escr.start(lockid,desc,ver,{from:_from,value:_amount,gas: 3000000})
-     return escr.yes(lockidd,comment,ver,{from:account,gas: 3000000})
+     return escr.yes(lockidd,comment,ver,{from:accounts[2],gas: 3000000})
    }).then(function(status){
        console.log("tx.accept.status");
        console.log(status);
@@ -582,7 +587,7 @@ buyerNo: function (lockid) {
   EscrowAdvansed.deployed().then(function(instance) {
      escr = instance;
   //   return escr.start(lockid,desc,ver,{from:_from,value:_amount,gas: 3000000})
-     return escr.no(lockidd,comment,ver,{from:account,gas: 3000000})
+     return escr.no(lockidd,comment,ver,{from:accounts[2],gas: 3000000})
    }).then(function(status){
        console.log("tx.accept.status");
        console.log(status);
@@ -668,7 +673,7 @@ arbYes: function (lockid,who,payment) {
   EscrowAdvansed.deployed().then(function(instance) {
      escr = instance;
   //   return escr.start(lockid,desc,ver,{from:_from,value:_amount,gas: 3000000})
-     return escr.arbYes(lockidd,_who,_payment,comment,ver,{from:account,gas: 3000000})
+     return escr.arbYes(lockidd,_who,_payment,comment,ver,{from:accounts[1],gas: 3000000})
    }).then(function(status){
        console.log("tx.accept.status");
        console.log(status);
@@ -677,11 +682,31 @@ arbYes: function (lockid,who,payment) {
 
        });
 
+},
+
+logdebug: function () {
+  var self=this;
+  var escr;
+
+  EscrowAdvansed.deployed().then(function(instance) {
+     escr = instance;
+    // return escr.escrows(1)
+    // 5 -Done, see .sol for different status details.
+        event=escr.LogDebug({},{fromBlock: 0, toBlock: 'latest'});
+      //  console.log(event);
+       event.watch(function(error, result){
+
+         console.log(result);
+});
+
+
+});
+
 }
 
 
 
-
+//end of window.App
 };
 
 
