@@ -5,7 +5,7 @@ module.exports = function(deployer) {
 var EscrowAdvansed=artifacts.require("EscrowAdvansed.sol");
 
 //deployer.deploy(EscrowSimple);
-deployer.deploy(EscrowAdvansed,web3.eth.accounts[1],10,1,1);
+deployer.deploy(EscrowAdvansed,web3.eth.accounts[1],10,1,0);
 
 
 };
