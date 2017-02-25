@@ -49,7 +49,7 @@ var account;
 var event;
 
 //This should be get from backend!!!!!!
-var lockid=1;
+var lockid=0;
 
 window.App = {
   start: function() {
@@ -85,6 +85,8 @@ window.App = {
     self.sellerInvoice();
 //    event.stopWatching();
     self.sellerCurrent();
+
+    self.buyerDeal();
 
 
 
@@ -174,18 +176,53 @@ $(pos).html(msg);
 
     //Should get it from backend
   //  var lockid=1;
+  EscrowAdvansed.deployed().then(function(instance) {
+     escr = instance;
+     var i;
+
+
+       for(i=0;; i++) {
+    return escr.escrows(i)
+    //   console.log(result);
+      console.log("result");
+      console.log(result);
+      console.log("result2");
+       console.log(result[2]);
+       var obj=result[2];
+       var arr=obj.c;
+       console.log("arr");
+       console.log(arr);
+       lockid=i;
+
+
+
+
+     if(arr[0]=="0") break;
+     if(lockid>=4) break;
+
+  //   console.log(arr);
+  //   lockid=i;
+};
+});
 
     EscrowAdvansed.deployed().then(function(instance) {
        escr = instance;
+  //     console.log(lockid);
+
+    console.log("lockid");
+    console.log(lockid);
     return escr.start(lockid,desc,ver,{from:_from,value:_amount,gas: 3000000})
   }).then(function(status) {
       console.log("tx.status:");
       console.log(status);
-
+      console.log("started!");
        pos="#startStatus";
        msg="Started!"
        self.setStatusPos(pos,msg);
-       lockid=lockid+1;
+
+    //   lockid=lockid+1;
+
+    //   console.log(lockid);
        //function that refresh current buyer deals.
     //   self.refreshBalance();
      }).catch(function(e) {
@@ -217,7 +254,7 @@ $(pos).html(msg);
 
          } else {
            console.log("Contract mined! Address: " + instance.address);
-        //   console.log(contract);
+           console.log(contract);
          }
 
   //Этот адрес можно потом передавать на бекенд или куда-нибудь еще
@@ -253,10 +290,11 @@ sellerInvoice: function(){
 //request whole Event and parse it after. Yes, it is not optimized, but it works for now.
 //    event=escr.LogEvent({lockId:1,dataInfo:dataInfo1},{fromBlock: 0, toBlock: 'latest'});
       event=escr.LogEvent({},{fromBlock: 0, toBlock: 'latest'});
-  //  console.log(event);
+      console.log("Event:");
+    console.log(event);
    event.watch(function(error, result){
-      if (!error)
-       console.log(result);
+    //  if (!error)
+    //   console.log(result);
     //   console.log(result.args.dataInfo);
 
       if(result.args.eventType.c==1){
@@ -314,8 +352,8 @@ sellerInvoice: function(){
     //   return escr.start(lockid,desc,ver,{from:_from,value:_amount,gas: 3000000})
        return escr.accept(lockidd,comment,ver,{from:account,gas: 3000000})
      }).then(function(status){
-         console.log("tx.accept.status");
-         console.log(status);
+        // console.log("tx.accept.status");
+      //   console.log(status);
        }).catch(function(e) {
            console.log(e);
 
@@ -339,8 +377,8 @@ sellerCurrent: function(){
     event=escr.LogEvent({},{fromBlock: 0, toBlock: 'latest'});
   //  console.log(event);
    event.watch(function(error, result){
-      if (!error)
-       console.log(result);
+    //  if (!error)
+    //   console.log(result);
     //   console.log(result.args.dataInfo);
     if(result.args.eventType.c==2){
 
@@ -381,7 +419,36 @@ sellerCurrent: function(){
 },
 
 
+buyerDeals: function () {
 
+},
+
+buyerDeal: function(){
+
+  var self=this;
+  var escr;
+
+  EscrowAdvansed.deployed().then(function(instance) {
+     escr = instance;
+     return escr.escrows(1)
+
+}).then(function(EscrowsArr) {
+  console.log(EscrowsArr);
+  var obj=EscrowsArr[2];
+  console.log(obj.c);
+  var arr=obj.c;
+  console.log(arr[0]);
+  var apnd="\
+  Lock id:<p> <span id='buyer2lockid'></span> \
+  Amount:<p> <span id='buyer2amount'></span> \
+  Description:<p><span id='buyer2Description'></span> \
+  Status:<p><span id='buyer2Status'></span> \
+  <p><button id='buyer2Submit' onclick=''>Submit</button><button id='buyer2Arbiter' onclick=''>Arbiter</button></p> \
+  ";
+});
+
+
+},
 
 
 
