@@ -50,6 +50,7 @@ var event;
 
 //This should be get from backend!!!!!!
 //var lockid=0;
+window.lockid=0;
 
 window.App = {
   start: function() {
@@ -88,6 +89,11 @@ window.App = {
 
     self.buyerDeal();
 
+    console.log("window.lokid:");
+    console.log(window.lokid);
+    self.defineLockid(window.lokid);
+    console.log("window.lokid");
+     console.log(window.lokid);
 
 
   },
@@ -154,6 +160,51 @@ $(pos).html(msg);
 
 },
 
+  defineLockid: function (lockid) {
+
+    var self=this;
+    var escr;
+
+
+    EscrowAdvansed.deployed().then(function(instance) {
+       escr = instance;
+       var i;
+       console.log("define lockid init");
+
+         for(i=0;;i++) {
+    return escr.escrows(i).then(function(result) {
+
+
+      //   console.log(result);
+        console.log("result");
+        console.log(result);
+        console.log("result2");
+         console.log(result[2]);
+         var obj=result[2];
+         var arr=obj.c;
+         console.log("arr");
+         console.log(arr);
+         lockid=i;
+      //   console.log(lokid);
+       });
+
+
+
+       if(arr[0]=="0") break;
+       if(lockid>=4) break;
+
+    //   console.log(arr);
+    //   lockid=i;
+  };
+
+  });
+  console.log("lokid_internal");
+  console.log(lokid);
+  return lokid;
+  },
+
+
+
   startEscrow: function () {
     var self=this;
 
@@ -173,38 +224,11 @@ $(pos).html(msg);
     var escr;
     var pos;
     var msg;
-    var lockid=0;
+//    var lockid=0;
 
     //Should get it from backend
   //  var lockid=1;
-  EscrowAdvansed.deployed().then(function(instance) {
-     escr = instance;
-     var i;
 
-
-       for(i=0;;i++) {
-    return escr.escrows(i)
-    //   console.log(result);
-      console.log("result");
-      console.log(result);
-      console.log("result2");
-       console.log(result[2]);
-       var obj=result[2];
-       var arr=obj.c;
-       console.log("arr");
-       console.log(arr);
-       lockid=i;
-
-
-
-
-     if(arr[0]=="0") break;
-     if(lockid>=4) break;
-
-  //   console.log(arr);
-  //   lockid=i;
-};
-});
 
     EscrowAdvansed.deployed().then(function(instance) {
        escr = instance;
