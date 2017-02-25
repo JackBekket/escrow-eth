@@ -49,8 +49,8 @@ var account;
 var event;
 
 //This should be get from backend!!!!!!
-//var lockid=0;
-window.lockid=0;
+var global_lockid=0;
+//window.lockid=0;
 
 window.App = {
   start: function() {
@@ -89,11 +89,11 @@ window.App = {
 
     self.buyerDeal();
 
-    console.log("window.lokid:");
-    console.log(window.lokid);
-    self.defineLockid(window.lokid);
-    console.log("window.lokid");
-     console.log(window.lokid);
+  //  console.log("window.lokid:");
+  //  console.log(window.lokid);
+//    self.defineLockid();
+  //  console.log("window.lokid");
+  //   console.log(window.lokid);
 
 
   },
@@ -160,47 +160,38 @@ $(pos).html(msg);
 
 },
 
-  defineLockid: function (lockid) {
+  defineLockid: function (){
 
     var self=this;
     var escr;
-
+    var lockid=0;
 
     EscrowAdvansed.deployed().then(function(instance) {
        escr = instance;
-       var i;
-       console.log("define lockid init");
 
-         for(i=0;;i++) {
-    return escr.escrows(i).then(function(result) {
-
-
-      //   console.log(result);
-        console.log("result");
+       event=escr.LogEvent({},{fromBlock: 0, toBlock: 'latest'});
+       console.log("Event:");
+    // console.log(event);
+     event.watch(function(error, result){
+       if (!error)
         console.log(result);
-        console.log("result2");
-         console.log(result[2]);
-         var obj=result[2];
-         var arr=obj.c;
-         console.log("arr");
-         console.log(arr);
-         lockid=i;
-      //   console.log(lokid);
-       });
+     //   console.log(result.args.dataInfo);
+     var lock=result.args.lockId.c;
+     var lock_s=lock.join();
+     console.log("lock_s");
+     console.log(lock_s);
+
+       if(lock_s>=global_lockid){
+
+         global_lockid=Number(lock_s);
+         console.log("global_lockid_defined");
+         console.log(global_lockid);
+     }
+
+     });
 
 
-
-       if(arr[0]=="0") break;
-       if(lockid>=4) break;
-
-    //   console.log(arr);
-    //   lockid=i;
-  };
-
-  });
-  console.log("lokid_internal");
-  console.log(lokid);
-  return lokid;
+     });
   },
 
 
@@ -233,10 +224,14 @@ $(pos).html(msg);
     EscrowAdvansed.deployed().then(function(instance) {
        escr = instance;
   //     console.log(lockid);
-
-    console.log("lockid");
-    console.log(lockid);
-    return escr.start(lockid,desc,ver,{from:_from,value:_amount,gas: 3000000})
+    self.defineLockid();
+    console.log("global_lockid_start");
+    console.log(global_lockid);
+    var lock=global_lockid;
+    lock=lock+1;
+    console.log("lock");
+    console.log(lock);
+    return escr.start(lock,desc,ver,{from:_from,value:_amount,gas: 3000000})
   }).then(function(status) {
       console.log("tx.status:");
       console.log(status);
@@ -245,7 +240,7 @@ $(pos).html(msg);
        msg="Started!"
        self.setStatusPos(pos,msg);
 
-    //   lockid=lockid+1;
+    //   global_lockid=global_lockid+1;
 
     //   console.log(lockid);
        //function that refresh current buyer deals.
@@ -458,11 +453,11 @@ buyerDeal: function(){
      return escr.escrows(1)
 
 }).then(function(EscrowsArr) {
-  console.log(EscrowsArr);
+//  console.log(EscrowsArr);
   var obj=EscrowsArr[2];
-  console.log(obj.c);
+//  console.log(obj.c);
   var arr=obj.c;
-  console.log(arr[0]);
+//  console.log(arr[0]);
   var apnd="\
   Lock id:<p> <span id='buyer2lockid'></span> \
   Amount:<p> <span id='buyer2amount'></span> \
