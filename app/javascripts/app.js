@@ -498,48 +498,60 @@ buyerDeals: function () {
 
 buyerDeal: function(){
 
-  var self=this;
-  var escr;
 
-  EscrowAdvansed.deployed().then(function(instance) {
-     escr = instance;
-    // return escr.escrows(1)
-    // 5 -Done, see .sol for different status details.
-        event=escr.LogEvent({},{fromBlock: 0, toBlock: 'latest'});
-      //  console.log(event);
-       event.watch(function(error, result){
+    var self=this;
+    var escr;
 
-         if(result.args.eventType.c==5){
+    EscrowAdvansed.deployed().then(function(instance) {
+       escr = instance;
 
 
-           var descr=result.args.dataInfo;
+  // 2 -Accepted, see .sol for different status details.
+      event=escr.LogEvent({},{fromBlock: 0, toBlock: 'latest'});
+    //  console.log(event);
+     event.watch(function(error, result){
+      //  if (!error)
+      //   console.log(result);
 
-           var lock=result.args.lockId.c;
-           var lock_s=lock.join();
+      if(result.args.eventType.c==2){
 
-           var buyadr=result.args.sender;
+         var descr=result.args.dataInfo;
 
-           // c -amount, e - decimals
-           //amount store in Wei format.
+         var lock=result.args.lockId.c;
+         var lock_s=lock.join();
 
-           var amount=result.args.payment;
+         var buyadr=result.args.sender;
 
-           var amnt=web3.fromWei(amount);
+         // c -amount, e - decimals
+         //amount store in Wei format.
 
+         var amount=result.args.payment;
 
-  var apnd="\
-  Lock id:<p> <span id='buyer2lockid'>"+lock_s+"</span> \
-  Amount:<p> <span id='buyer2amount'>"+amnt+"</span> \
-  Description:<p><span id='buyer2Description'>"+descr+"</span> \
-  Status:<p><span id='buyer2Status'></span> \
-  <p><button id='buyer2Done' onclick='App.buyerYes("+lock_s+")'>Submit</button><button id='buyer2Arbiter' onclick='App.buyerNo("+lock_s+")'>Arbiter</button></p> \
-  ";
-  $( ".buyer2" ).append(apnd);
-}
+         var amnt=web3.fromWei(amount);
 
 
-});
-});
+      //    return result;
+      var apnd="   <br> \
+      <label for='Buyer address'>"+buyadr+" <span id='buyeraddr2'>0x0...</span> \
+      <br> \
+        Amount:<p> <span id='currentAmount'>"+amnt+"</span> \
+        Description:<p> <span id='currentDescr'>"+descr+"</span> \
+        Status:<p> <span id='currentStatus'></span> \
+        <button type='button' id='sellerDone' onclick='App.currentDone("+lock_s+")'>Done</button><button id='sellerCancel' onclick='App.invoiceReject("+lock_s+")'>Cancel</button> \
+        ";
+      //Here append
+      $( "#b2" ).append(apnd)
+  //    {
+  //      event.preventDefault();
+  //    };
+  }
+
+    });
+
+
+    });
+  //myEvent.stopWatching();
+
 
 },
 
@@ -550,18 +562,14 @@ buyerYes: function (lockid) {
 //ver 0 - demo
   var ver=0;
 
-  console.log("buyerYes init");
-  console.log("lockid get");
-  console.log(lockidd);
-
 // comment
   var comment;
-  comment = "Good Job!";
-  console.log(comment);
+  comment = "buyerYes";
+
   EscrowAdvansed.deployed().then(function(instance) {
      escr = instance;
-     console.log("instanceOK");
-     return escr.done(lockidd,comment,ver,{from:accounts[0],gas: 3000000})
+
+     return escr.yes(lockidd,comment,ver,{from:accounts[2],gas: 3000000})
    }).then(function(status){
        console.log("tx.accept.status");
        console.log(status);
@@ -569,30 +577,6 @@ buyerYes: function (lockid) {
          console.log(e);
 
        });
-
-       /**
-       var self=this;
-       var escr;
-       var lockidd=lockid;
-     //ver 0 - demo
-       var ver=0;
-
-     // comment
-       var comment;
-       comment = "Job's Done!";
-
-       EscrowAdvansed.deployed().then(function(instance) {
-          escr = instance;
-
-          return escr.done(lockidd,comment,ver,{from:account,gas: 3000000})
-        }).then(function(status){
-            console.log("tx.accept.status");
-            console.log(status);
-          }).catch(function(e) {
-              console.log(e);
-
-            });
-            **/
 
 
 },
