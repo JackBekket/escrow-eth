@@ -620,8 +620,9 @@ ArbSeller: function() {
 
      return escr.seller.call()
    }).then(function(seller){
-       seller_addr = seller;
-
+       seller_addr = String(seller);
+       console.log("seller_addr");
+       console.log(seller_addr);
      });
 
   EscrowAdvansed.deployed().then(function(instance) {
@@ -649,6 +650,9 @@ ArbSeller: function() {
 
            var amnt=web3.fromWei(amount);
 
+           console.log("seller_addr before transmission");
+        //   seller_addr=web3.sha3(seller_addr);
+           console.log(seller_addr);
 
   var apnd="\
   Amount:<p><span id='arbiter2Amount'>"+amnt+"</span> \
@@ -671,8 +675,14 @@ arbYes: function (lockid,who,payment) {
   var escr;
   var lockidd=lockid;
 //ver 0 - demo
+console.log("lokidd");
+console.log(lockidd);
   var ver=0;
+  console.log("who");
+  console.log(who);
   var _who=who;
+  console.log("_who");
+  console.log(_who);
   var _payment=payment;
 // comment
   var comment;
