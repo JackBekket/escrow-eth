@@ -4,11 +4,29 @@
 // Import libraries we need.
  import { default as Web3} from 'web3'
  import { default as contract } from 'truffle-contract'
+// import $ from 'jquery'
+
+import "../../old/public/js/semantic.min.js"
+// import "../../old/public/css/semantic.min.css"
+
+
+
+
+//import "../../old/public/js/semantic.min.js"
+//import semantic from '../../old/public/js/semantic.min.js'
 
 
 //Import example if you want to use 'import' syntax instead 'require' standart.
 // Import our contract artifacts and turn them into usable abstractions.
  import escrow_artifacts from '../../build/contracts/EscrowAdvansed.json'
+
+ //require('../../old/public/css/themes/semantic.min.css')
+// require('../../old/public/js/semantic.min.js')
+//require('')
+
+
+//require('semantic-ui-css/semantic.css')
+//require('semantic-ui-css/semantic.js')
 
 // MetaCoin is our usable abstraction, which we'll use through the code below.
 var EscrowAdvansed = contract(escrow_artifacts);
