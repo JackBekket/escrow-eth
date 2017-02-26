@@ -167,8 +167,8 @@ $(pos).html(msg);
     var _to = $('#inp2seller').val();
     var val1=$('#inp2amount').val();
     var _amount = web3.toWei(val1);
-    console.log(_amount);
-
+  //  console.log(_amount);
+    var desc =$('#inp2description').val();
     var escr;
     var pos;
     var msg;
