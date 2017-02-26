@@ -4,7 +4,7 @@
 // Import libraries we need.
  import { default as Web3} from 'web3'
  import { default as contract } from 'truffle-contract'
-// import $ from 'jquery'
+ import $ from 'jquery'
 
 import "../../old/public/js/semantic.min.js"
 // import "../../old/public/css/semantic.min.css"
