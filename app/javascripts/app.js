@@ -792,6 +792,33 @@ getMoney: function() {
        });
 
 }
+/**
+getStatus: function (lockid) {
+    var self=this;
+    var escr;
+    var lock=lockid;
+    lock=Number(lock);
+    console.log("lock");
+    console.log(lock);
+  //  var status;
+    EscrowAdvansed.deployed().then(function(instance) {
+       escr = instance;
+  // 2 -Accepted, see .sol for different status details.
+      event=escr.LogEvent({lockId:lock},{fromBlock: 0, toBlock: 'latest'});
+    //  console.log(event);
+     event.watch(function(error, result){
+      //  if (!error)
+      //   console.log(result);
+      var status;
+      status=result.args.eventType.c;
+      console.log("status cycle");
+      console.log(status[0]);
+      global_status.lockid=status[0];
+      console.log(global_status.lockid);
+    });
+    });
+}
+**/
 
 
 //end of window.App
