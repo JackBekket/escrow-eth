@@ -15,31 +15,21 @@ var EscrowAdvansed = contract(escrow_artifacts);
 //console.log('json');
 
 
-
-
-
-
 // For application bootstrapping, check out window.addEventListener below.
 var accounts;
 var account;
-
 
 var event;
 
 //This should be get from backend!!!!!!
 var global_lockid=0;
-//window.lockid=0;
 
 //And this one too.
-var global_status ={};
-
-
+//var global_status ={};
 
 window.App = {
   start: function() {
     var self = this;
-
-
 
     // Bootstrap the EscrowAdvansed abstraction for Use.
     //EscrowAdvansed.setProvider(web3.currentProvider);
@@ -74,8 +64,6 @@ window.App = {
     self.buyerDeal();
     self.ArbSeller();
     self.logdebug();
-
-
 
   },
 
@@ -127,10 +115,7 @@ window.App = {
          self.setStatus("Error getting address; see log.");
 
   });
-
   },
-
-
 
   setStatus: function(message) {
     var status = document.getElementById("status");
@@ -169,43 +154,28 @@ $(pos).html(msg);
          console.log("global_lockid_defined");
          console.log(global_lockid);
      }
-
      });
-
-
      });
   },
 
-
-
   startEscrow: function () {
     var self=this;
-
     //version. 0-demo, 1-live
     var ver=0;
     //in live version must be replaced to accounts[0]
     var _from=accounts[2];
-    //selleraddr1
     var _to = $('#inp2seller').val();
     var val1=$('#inp2amount').val();
-//    console.log(val1);
     var _amount = web3.toWei(val1);
     console.log(_amount);
-    var desc=$('#inp2description').val();
-//    console.log(desc);
 
     var escr;
     var pos;
     var msg;
-//    var lockid=0;
-
-    //Should get it from backend
-  //  var lockid=1;
 
 
     EscrowAdvansed.deployed().then(function(instance) {
        escr = instance;
-  //     console.log(lockid);
     self.defineLockid();
     console.log("global_lockid_start");
     console.log(global_lockid);
@@ -262,9 +232,6 @@ $(pos).html(msg);
   //Этот адрес можно потом передавать на бекенд или куда-нибудь еще
 //   console.log(instance.address);
 
-
-
-
  });
  //Функция которая должна быть вызвана после размещения нового контракта.
  //event.stopWatching();
@@ -272,12 +239,9 @@ $(pos).html(msg);
 // App.sellerInvoice();
  //App.sellerCurrent();
 
-
   },
 
 sellerInvoice: function(){
-
-
 
   var self=this;
   var escr;
@@ -295,13 +259,8 @@ sellerInvoice: function(){
       console.log("Event:");
     console.log(event);
    event.watch(function(error, result){
-    //  if (!error)
-    //   console.log(result);
-    //   console.log(result.args.dataInfo);
 
       if(result.args.eventType.c==1){
-
-
 
        var descr=result.args.dataInfo;
 
@@ -310,15 +269,9 @@ sellerInvoice: function(){
 
        var buyadr=result.args.sender;
 
-       // c -amount, e - decimals
-       //amount store in Wei format.
-
        var amount=result.args.payment;
-
        var amnt=web3.fromWei(amount);
 
-
-    //    return result;
     var apnd="  <div class='sInv_in' id='sInv"+lock_s+"'> \
     Buyer Address:<p> <span id='invoiceBuyerAddr'>"+buyadr+"</span> </br>\
       Amount:<p> <span id='invoiceAmount'>"+amnt+"</span> </br>\
@@ -328,12 +281,8 @@ sellerInvoice: function(){
     //Here append
     $( ".sInvoice" ).append(apnd);
 }
-
   });
-
-
   });
-//myEvent.stopWatching();
 
 },
 
@@ -385,7 +334,6 @@ sellerInvoice: function(){
       //   console.log(status);
        }).catch(function(e) {
            console.log(e);
-
          });
          $("div.sInv"+lockid).remove();
   },
@@ -405,8 +353,7 @@ sellerCurrent: function(){
     event=escr.LogEvent({},{fromBlock: 0, toBlock: 'latest'});
   //  console.log(event);
    event.watch(function(error, result){
-      if (!error)
-       console.log(result);
+
 
     if(result.args.eventType.c==2){
 
@@ -432,7 +379,6 @@ sellerCurrent: function(){
       //Here append
       $( ".sCurrent" ).append(apnd);
 }
-
   });
   });
 },
@@ -479,7 +425,6 @@ sellerFreeze: function(){
       //Here append
       $( ".sFreeze" ).append(apnd);
 }
-
   });
   });
 },
@@ -520,7 +465,6 @@ getStatus: function (lockid) {
 },
 **/
 
-
 currentDone: function (lockid) {
   var self=this;
   var escr;
@@ -541,12 +485,9 @@ currentDone: function (lockid) {
        console.log(status);
      }).catch(function(e) {
          console.log(e);
-
        });
        $("div.sCur"+lockid).remove();
 },
-
-
 
 buyerDeals: function () {
 
@@ -578,15 +519,9 @@ buyerDeal: function(){
 
          var buyadr=result.args.sender;
 
-         // c -amount, e - decimals
-         //amount store in Wei format.
-
          var amount=result.args.payment;
-
          var amnt=web3.fromWei(amount);
 
-
-      //    return result;
       var apnd="   <div id='bD"+lock_s+"'>   \
       <br> \
       <label for='Buyer address'>"+buyadr+" <span id='buyeraddr2'>0x0...</span> \
@@ -603,14 +538,8 @@ buyerDeal: function(){
   //      event.preventDefault();
   //    };
   }
-
     });
-
-
     });
-  //myEvent.stopWatching();
-
-
 },
 
 buyerYes: function (lockid) {
@@ -688,7 +617,7 @@ sellerYes: function (lockid) {
 
        });
 
-    //   $("div.bD"+lockid).remove();
+
 },
 
 sellerNo: function (lockid) {
@@ -713,7 +642,7 @@ sellerNo: function (lockid) {
          console.log(e);
 
        });
-  //     $("div.bD"+lockid).remove();
+
 },
 
 
@@ -739,13 +668,11 @@ ArbSeller: function() {
   EscrowAdvansed.deployed().then(function(instance) {
      escr = instance;
     // return escr.escrows(1)
-    // 5 -Done, see .sol for different status details.
         event=escr.LogEvent({},{fromBlock: 0, toBlock: 'latest'});
       //  console.log(event);
        event.watch(function(error, result){
 // 12 - Freeze
          if(result.args.eventType.c==12){
-
 
            var descr=result.args.dataInfo;
 
@@ -753,17 +680,9 @@ ArbSeller: function() {
            var lock_s=lock.join();
 
            var buyadr=result.args.sender;
-
-           // c -amount, e - decimals
-           //amount store in Wei format.
-
            var amount=result.args.payment;
-
            var amnt=web3.fromWei(amount);
 
-    //       console.log("seller_addr before transmission");
-        //   seller_addr=web3.sha3(seller_addr);
-    //       console.log(seller_addr);
 
   var apnd="\
   <div id='arbiter2"+lock_s+"'>  \
@@ -778,10 +697,8 @@ ArbSeller: function() {
   $( ".arbiter2" ).append(apnd);
 }
 
-
 });
 });
-
 },
 
 arbYes: function (lockid,choice,payment) {
@@ -789,8 +706,8 @@ arbYes: function (lockid,choice,payment) {
   var escr;
   var lockidd=lockid;
 //ver 0 - demo
-console.log("lokidd");
-console.log(lockidd);
+//console.log("lokidd");
+//console.log(lockidd);
   var ver=0;
   var who;
   var selector;
@@ -805,8 +722,8 @@ console.log(lockidd);
   }
   who=$("#"+selector).html();
   var _who=who;
-  console.log("_who");
-  console.log(_who);
+//  console.log("_who");
+//  console.log(_who);
   var _payment=payment;
 // comment
   var comment;
@@ -840,10 +757,7 @@ logdebug: function () {
          var r1=JSON.stringify(result);
          console.log(r1);
 });
-
-
 });
-
 },
 
 getFees: function () {
@@ -877,7 +791,7 @@ getMoney: function() {
          console.log(e);
 
        });
-   
+
 }
 
 
