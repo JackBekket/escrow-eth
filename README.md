@@ -95,7 +95,7 @@ For live version just replace all of it to ```account```.
 3. lockId is global variable defined on ```window``` level of application and can be cheked and define from blockchain by any user, which allow to use it application as fully decentralized serverless application.
 However, if it would use in server application - this variable should store there.
 4. For now all interaction with every user and group users are connected through solidity ```events```,
-which, of course, not rely good method of communication, especially because you are get all events from this contract ever been fired.
+which, of course, not realy good method of communication, especially because you are get all events from this contract ever been fired.
 For fixing this I suggest using special handler, which will store info about 'present' deal status.
 This handler must be in server side or in smart contract of hier level (like registry).
 5. There might be some bugs with web3, webpack, or something else. for now working version of web3 is ^0.18.3.
