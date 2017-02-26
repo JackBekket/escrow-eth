@@ -75,11 +75,6 @@ window.App = {
     self.ArbSeller();
     self.logdebug();
 
-  //  console.log("window.lokid:");
-  //  console.log(window.lokid);
-//    self.defineLockid();
-  //  console.log("window.lokid");
-  //   console.log(window.lokid);
 
 
   },
@@ -849,9 +844,24 @@ logdebug: function () {
 
 });
 
+},
+
+getFees: function () {
+  var self=this;
+  var escr;
+
+  EscrowAdvansed.deployed().then(function(instance) {
+     escr = instance;
+     return escr.getFees({from:accounts[1],gas: 3000000})
+   }).then(function(status){
+       console.log("tx.accept.status");
+       console.log(status);
+     }).catch(function(e) {
+         console.log(e);
+
+       });
+   });
 }
-
-
 
 
 //end of window.App
