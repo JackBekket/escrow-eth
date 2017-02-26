@@ -860,7 +860,24 @@ getFees: function () {
          console.log(e);
 
        });
-   });
+
+},
+
+getMoney: function() {
+  var self=this;
+  var escr;
+
+  EscrowAdvansed.deployed().then(function(instance) {
+     escr = instance;
+     return escr.getMoney({from:account,gas: 3000000})
+   }).then(function(status){
+       console.log("tx.accept.status");
+       console.log(status);
+     }).catch(function(e) {
+         console.log(e);
+
+       });
+   
 }
 
 
