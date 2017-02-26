@@ -69,6 +69,7 @@ window.App = {
     self.sellerInvoice();
 //    event.stopWatching();
     self.sellerCurrent();
+    self.sellerFreeze();
 
     self.buyerDeal();
     self.ArbSeller();
@@ -273,8 +274,8 @@ $(pos).html(msg);
  //Функция которая должна быть вызвана после размещения нового контракта.
  //event.stopWatching();
  App.start();
- App.sellerInvoice();
- App.sellerCurrent();
+// App.sellerInvoice();
+ //App.sellerCurrent();
 
 
   },
@@ -323,7 +324,7 @@ sellerInvoice: function(){
 
 
     //    return result;
-    var apnd="  <div class='sInv_in' id='"+lock_s+"'> \
+    var apnd="  <div class='sInv_in' id='sInv"+lock_s+"'> \
     Buyer Address:<p> <span id='invoiceBuyerAddr'>"+buyadr+"</span> </br>\
       Amount:<p> <span id='invoiceAmount'>"+amnt+"</span> </br>\
       Description:<p> <span id='invoiceDescription'>"+descr+"</span></br> \
@@ -365,6 +366,8 @@ sellerInvoice: function(){
 
          });
 
+         $("div.sInv"+lockid).remove();
+
   },
 
   invoiceReject: function (lockid) {
@@ -389,7 +392,7 @@ sellerInvoice: function(){
            console.log(e);
 
          });
-
+         $("div.sInv"+lockid).remove();
   },
 
 sellerCurrent: function(){
@@ -402,7 +405,6 @@ sellerCurrent: function(){
 
   EscrowAdvansed.deployed().then(function(instance) {
      escr = instance;
-
 
 // 2 -Accepted, see .sol for different status details.
     event=escr.LogEvent({},{fromBlock: 0, toBlock: 'latest'});
@@ -417,35 +419,12 @@ sellerCurrent: function(){
 
         lock=result.args.lockId.c;
         lock_s=lock.join();
-        console.log("eventType lock");
-        console.log(lock_s);
-}
-      console.log("out if log");
-      console.log(lock_s);
-      var stat;
-      self.getStatus(lock_s).then(function () {
-         stat=global_status.lockid;
-        console.log("stat:");
-        console.log(stat);
-        console.log("global_status");
-        console.log(global_status.lockid);
-      });
 
-
-        if(stat==2){
-          log("stat is 2")
          var buyadr=result.args.sender;
-
-         // c -amount, e - decimals
-         //amount store in Wei format.
-
          var amount=result.args.payment;
-
          var amnt=web3.fromWei(amount);
 
-
-      //    return result;
-      var apnd="   <div id='lock_s'>  \
+      var apnd="   <div id='sCur"+lock_s+"'>  \
       <br> \
       <label for='Buyer address'>"+buyadr+" <span id='buyeraddr2'>0x0...</span> \
       <br> \
@@ -459,18 +438,58 @@ sellerCurrent: function(){
       $( ".sCurrent" ).append(apnd);
 }
 
-
-
-
-
   });
-
-
   });
-//myEvent.stopWatching();
-
 },
 
+sellerFreeze: function(){
+
+  var lock;
+  var lock_s;
+
+  var self=this;
+  var escr;
+
+  EscrowAdvansed.deployed().then(function(instance) {
+     escr = instance;
+
+// 2 -Accepted, see .sol for different status details.
+    event=escr.LogEvent({},{fromBlock: 0, toBlock: 'latest'});
+  //  console.log(event);
+   event.watch(function(error, result){
+      if (!error)
+       console.log(result);
+
+    if(result.args.eventType.c==12){
+
+       var descr=result.args.dataInfo;
+
+        lock=result.args.lockId.c;
+        lock_s=lock.join();
+
+         var buyadr=result.args.sender;
+         var amount=result.args.payment;
+         var amnt=web3.fromWei(amount);
+
+      var apnd="    <div id='sFr"+lock_s+"'>   \
+      <br> \
+      <label for='Buyer address'>"+buyadr+" <span id='buyeraddr2'>0x0...</span> \
+      <br> \
+        Amount:<p> <span id='currentAmount'>"+amnt+"</span> \
+        Description:<p> <span id='currentDescr'>"+descr+"</span> \
+        Status:<p> <span id='currentStatus'></span> \
+        <button type='button' id='buyerSubmit' onclick='App.sellerYes("+lock_s+")'>Submit</button><button type='button' id='sellerCancel' onclick='App.sellerNo("+lock_s+")'>Cancel</button> \
+        </div> \
+        ";
+      //Here append
+      $( ".sFreeze" ).append(apnd);
+}
+
+  });
+  });
+},
+
+/**
 getStatus: function (lockid) {
 
     var self=this;
@@ -504,7 +523,7 @@ getStatus: function (lockid) {
     });
 
 },
-
+**/
 
 
 currentDone: function (lockid) {
@@ -529,7 +548,7 @@ currentDone: function (lockid) {
          console.log(e);
 
        });
-
+       $("div.sCur"+lockid).remove();
 },
 
 
@@ -573,13 +592,15 @@ buyerDeal: function(){
 
 
       //    return result;
-      var apnd="   <br> \
+      var apnd="   <div id='bD"+lock_s+"'>   \
+      <br> \
       <label for='Buyer address'>"+buyadr+" <span id='buyeraddr2'>0x0...</span> \
       <br> \
         Amount:<p> <span id='currentAmount'>"+amnt+"</span> \
         Description:<p> <span id='currentDescr'>"+descr+"</span> \
         Status:<p> <span id='currentStatus'></span> \
         <button type='button' id='buyerSubmit' onclick='App.buyerYes("+lock_s+")'>Submit</button><button type='button' id='sellerCancel' onclick='App.buyerNo("+lock_s+")'>Cancel</button> \
+        </div> \
         ";
       //Here append
       $( "#b2" ).append(apnd)
@@ -620,7 +641,7 @@ buyerYes: function (lockid) {
 
        });
 
-
+       $("div.bD"+lockid).remove();
 },
 
 buyerNo: function (lockid) {
@@ -645,8 +666,61 @@ buyerNo: function (lockid) {
          console.log(e);
 
        });
-
+       $("div.bD"+lockid).remove();
 },
+
+
+sellerYes: function (lockid) {
+  var self=this;
+  var escr;
+  var lockidd=lockid;
+//ver 0 - demo
+  var ver=0;
+
+// comment
+  var comment;
+  comment = "sellerYes";
+
+  EscrowAdvansed.deployed().then(function(instance) {
+     escr = instance;
+
+     return escr.yes(lockidd,comment,ver,{from:accounts[0],gas: 3000000})
+   }).then(function(status){
+       console.log("tx.accept.status");
+       console.log(status);
+     }).catch(function(e) {
+         console.log(e);
+
+       });
+
+    //   $("div.bD"+lockid).remove();
+},
+
+sellerNo: function (lockid) {
+  var self=this;
+  var escr;
+  var lockidd=lockid;
+//ver 0 - demo
+  var ver=0;
+
+// comment
+  var comment;
+  comment = "It is not good :(";
+
+  EscrowAdvansed.deployed().then(function(instance) {
+     escr = instance;
+  //   return escr.start(lockid,desc,ver,{from:_from,value:_amount,gas: 3000000})
+     return escr.no(lockidd,comment,ver,{from:accounts[0],gas: 3000000})
+   }).then(function(status){
+       console.log("tx.accept.status");
+       console.log(status);
+     }).catch(function(e) {
+         console.log(e);
+
+       });
+  //     $("div.bD"+lockid).remove();
+},
+
 
 ArbSellers: function() {
 
@@ -754,7 +828,7 @@ console.log(lockidd);
          console.log(e);
 
        });
-
+       $("div.arbiter2"+lockid).remove();
 },
 
 logdebug: function () {
