@@ -36,6 +36,8 @@
     "webpack-dev-server": "^2.3.0"
   },
   "dependencies": {
-    "jquery": "^3.1.1"
+    "fs": "0.0.1-security",
+    "jquery": "^3.1.1",
+    "semantic-ui": "^2.2.9"
   }
 }

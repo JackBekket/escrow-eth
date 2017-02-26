@@ -16,6 +16,10 @@ module.exports = {
       },
     //  extensions: ['', '.js', '.jsx'],
     },
+    node: {
+    fs: "empty",
+    module: "empty"
+   },
   plugins: [
     new webpack.ProvidePlugin({
    $: "jquery",

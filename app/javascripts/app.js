@@ -1,16 +1,27 @@
 // Import the page's CSS. Webpack will know what to do with it.
- import "../stylesheets/app.css"
+// import "../stylesheets/app.css"
 
 // Import libraries we need.
  import { default as Web3} from 'web3'
  import { default as contract } from 'truffle-contract'
  import $ from 'jquery'
 
-import "../../old/public/js/semantic.min.js"
+
+//import "../../old/public/js/semantic.min.js"
 // import "../../old/public/css/semantic.min.css"
 
 
 
+//import "../../semantic/tasks/build/assets.js"
+//import "../../semantic/tasks/build/css.js"
+//import "../../semantic/tasks/build/javascript.js"
+
+require ("../../semantic/tasks/build/assets.js")
+require ("../../semantic/tasks/build/css.js")
+require("../../semantic/tasks/build/javascript.js")
+
+
+//import semantic from '../../node_modules/semantic-ui/'
 
 //import "../../old/public/js/semantic.min.js"
 //import semantic from '../../old/public/js/semantic.min.js'
@@ -18,12 +29,13 @@ import "../../old/public/js/semantic.min.js"
 
 //Import example if you want to use 'import' syntax instead 'require' standart.
 // Import our contract artifacts and turn them into usable abstractions.
- import escrow_artifacts from '../../build/contracts/EscrowAdvansed.json'
+  import escrow_artifacts from '../../build/contracts/EscrowAdvansed.json'
 
  //require('../../old/public/css/themes/semantic.min.css')
 // require('../../old/public/js/semantic.min.js')
 //require('')
 
+//require('semantic-ui')
 
 //require('semantic-ui-css/semantic.css')
 //require('semantic-ui-css/semantic.js')
@@ -358,6 +370,7 @@ sellerInvoice: function(){
 
 sellerCurrent: function(){
 
+
   var lock;
   var lock_s;
 
@@ -447,41 +460,7 @@ sellerFreeze: function(){
   });
 },
 
-/**
-getStatus: function (lockid) {
 
-    var self=this;
-    var escr;
-    var lock=lockid;
-    lock=Number(lock);
-    console.log("lock");
-    console.log(lock);
-  //  var status;
-    EscrowAdvansed.deployed().then(function(instance) {
-       escr = instance;
-
-
-  // 2 -Accepted, see .sol for different status details.
-      event=escr.LogEvent({lockId:lock},{fromBlock: 0, toBlock: 'latest'});
-    //  console.log(event);
-     event.watch(function(error, result){
-      //  if (!error)
-      //   console.log(result);
-      var status;
-      status=result.args.eventType.c;
-
-      console.log("status cycle");
-      console.log(status[0]);
-      global_status.lockid=status[0];
-      console.log(global_status.lockid);
-
-    });
-
-
-    });
-
-},
-**/
 
 currentDone: function (lockid) {
   var self=this;
