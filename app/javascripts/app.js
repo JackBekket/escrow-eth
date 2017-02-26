@@ -1,5 +1,5 @@
 // Import the page's CSS. Webpack will know what to do with it.
-// import "../stylesheets/app.css"
+ import "../stylesheets/app.css"
 
 // Import libraries we need.
  import { default as Web3} from 'web3'
@@ -14,9 +14,9 @@
 
 
 
-import "../../semantic/tasks/build/assets.js"
-import "../../semantic/tasks/build/css.js"
-import "../../semantic/tasks/build/javascript.js"
+//import "../../semantic/tasks/build/assets.js"
+//import "../../semantic/tasks/build/css.js"
+//import "../../semantic/tasks/build/javascript.js"
 
 //require ("../../semantic/tasks/build/assets.js")
 //require ("../../semantic/tasks/build/css.js")
