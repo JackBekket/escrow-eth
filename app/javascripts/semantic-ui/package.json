@@ -1,0 +1,166 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "semantic-ui",
+        "scope": null,
+        "escapedName": "semantic-ui",
+        "name": "semantic-ui",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/home/jack/Eth-Projects/escrow"
+    ]
+  ],
+  "_from": "semantic-ui@latest",
+  "_id": "semantic-ui@2.2.9",
+  "_inCache": true,
+  "_location": "/semantic-ui",
+  "_nodeVersion": "7.5.0",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/semantic-ui-2.2.9.tgz_1487700257954_0.9558000436518341"
+  },
+  "_npmUser": {
+    "name": "semantic-bot",
+    "email": "bot@semantic-ui.com"
+  },
+  "_npmVersion": "4.2.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "semantic-ui",
+    "scope": null,
+    "escapedName": "semantic-ui",
+    "name": "semantic-ui",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/semantic-ui/-/semantic-ui-2.2.9.tgz",
+  "_shasum": "e7e48b62b52c7e0c309f4f1895f92e9d1487fe42",
+  "_shrinkwrap": null,
+  "_spec": "semantic-ui",
+  "_where": "/home/jack/Eth-Projects/escrow",
+  "author": {
+    "name": "Jack Lukic",
+    "email": "jack@semantic-ui.com"
+  },
+  "bugs": {
+    "url": "https://github.com/Semantic-Org/Semantic-UI/issues"
+  },
+  "dependencies": {
+    "better-console": "*",
+    "del": "^2.2.2",
+    "extend": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-chmod": "^2.0.0",
+    "gulp-clean-css": "^2.3.2",
+    "gulp-clone": "^1.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-concat-css": "^2.3.0",
+    "gulp-copy": "1.0.0",
+    "gulp-dedupe": "0.0.2",
+    "gulp-flatten": "^0.3.1",
+    "gulp-header": "^1.8.8",
+    "gulp-help": "^1.6.1",
+    "gulp-if": "^2.0.2",
+    "gulp-json-editor": "^2.2.1",
+    "gulp-less": "^3.3.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-print": "^2.0.1",
+    "gulp-prompt": "^0.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-rtlcss": "^1.0.0",
+    "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.7",
+    "gulp-watch": "^4.3.11",
+    "jquery": "^3.1.1",
+    "map-stream": "^0.1.0",
+    "merge-stream": "^1.0.0",
+    "mkdirp": "^0.5.1",
+    "require-dot-file": "^0.4.0",
+    "run-sequence": "^1.2.2",
+    "wrench-sui": "^0.0.3",
+    "yamljs": "^0.2.8"
+  },
+  "description": "Semantic empowers designers and developers by creating a shared vocabulary for UI.",
+  "devDependencies": {
+    "github": "*",
+    "gulp-concat-filenames": "*",
+    "gulp-debug": "*",
+    "gulp-git": "*",
+    "gulp-tap": "*",
+    "merge-stream": "*"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "e7e48b62b52c7e0c309f4f1895f92e9d1487fe42",
+    "tarball": "https://registry.npmjs.org/semantic-ui/-/semantic-ui-2.2.9.tgz"
+  },
+  "gitHead": "a0fc599c164ec05987beb6fa88fb6763395281a5",
+  "homepage": "http://www.semantic-ui.com",
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "jlukic",
+      "email": "jack@semantic-ui.com"
+    },
+    {
+      "name": "semantic-bot",
+      "email": "bot@semantic-ui.com"
+    }
+  ],
+  "name": "semantic-ui",
+  "optionalDependencies": {},
+  "peerDependencies": {
+    "better-console": "*",
+    "del": "*",
+    "extend": "*",
+    "gulp": "*",
+    "gulp-autoprefixer": "*",
+    "gulp-chmod": "*",
+    "gulp-clean-css": "*",
+    "gulp-clone": "*",
+    "gulp-concat": "*",
+    "gulp-concat-css": "*",
+    "gulp-copy": "*",
+    "gulp-dedupe": "*",
+    "gulp-flatten": "*",
+    "gulp-header": "*",
+    "gulp-help": "*",
+    "gulp-if": "*",
+    "gulp-less": "*",
+    "gulp-notify": "*",
+    "gulp-plumber": "*",
+    "gulp-print": "*",
+    "gulp-rename": "*",
+    "gulp-replace": "*",
+    "gulp-rtlcss": "*",
+    "gulp-uglify": "*",
+    "gulp-util": "*",
+    "gulp-watch": "*",
+    "map-stream": "*",
+    "require-dot-file": "*",
+    "run-sequence": "*",
+    "yamljs": "*"
+  },
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Semantic-Org/Semantic-UI.git"
+  },
+  "scripts": {
+    "install": "gulp install"
+  },
+  "style": "dist/semantic.css",
+  "title": "Semantic UI",
+  "version": "2.2.9"
+}

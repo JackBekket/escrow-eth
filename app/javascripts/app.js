@@ -6,19 +6,21 @@
  import { default as contract } from 'truffle-contract'
  import $ from 'jquery'
 
+//import semantic from 'semantic-ui'
+
 
 //import "../../old/public/js/semantic.min.js"
 // import "../../old/public/css/semantic.min.css"
 
 
 
-//import "../../semantic/tasks/build/assets.js"
-//import "../../semantic/tasks/build/css.js"
-//import "../../semantic/tasks/build/javascript.js"
+import "../../semantic/tasks/build/assets.js"
+import "../../semantic/tasks/build/css.js"
+import "../../semantic/tasks/build/javascript.js"
 
-require ("../../semantic/tasks/build/assets.js")
-require ("../../semantic/tasks/build/css.js")
-require("../../semantic/tasks/build/javascript.js")
+//require ("../../semantic/tasks/build/assets.js")
+//require ("../../semantic/tasks/build/css.js")
+//require("../../semantic/tasks/build/javascript.js")
 
 
 //import semantic from '../../node_modules/semantic-ui/'
