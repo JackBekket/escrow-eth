@@ -4,7 +4,7 @@
 // Import libraries we need.
  import { default as Web3} from 'web3'
  import { default as contract } from 'truffle-contract'
- //import $ from 'jquery'
+ import $ from 'jquery'
 
 //import semantic from 'semantic-ui'
 
@@ -43,8 +43,6 @@ import "../../dist/js/flat-ui.min.js"
 
 //require('semantic-ui-css/semantic.css')
 //require('semantic-ui-css/semantic.js')
-
-//require('./jquery-3.1.1.min');
 
 // MetaCoin is our usable abstraction, which we'll use through the code below.
 var EscrowAdvansed = contract(escrow_artifacts);
