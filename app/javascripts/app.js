@@ -1,10 +1,10 @@
 // Import the page's CSS. Webpack will know what to do with it.
 // import "../stylesheets/app.css"
-
+import { default as $} from 'jquery'
 // Import libraries we need.
  import { default as Web3} from 'web3'
  import { default as contract } from 'truffle-contract'
- //import $ from 'jquery'
+
 
 //import semantic from 'semantic-ui'
 
@@ -62,6 +62,7 @@ var global_lockid=0;
 
 //And this one too.
 //var global_status ={};
+//window.$ = window.jQuery = require('jquery');
 
 window.App = {
   start: function() {
@@ -757,7 +758,8 @@ logdebug: function () {
         event=escr.LogDebug({},{fromBlock: 0, toBlock: 'latest'});
       //  console.log(event);
        event.watch(function(error, result){
-         var r1=JSON.stringify(result);
+      //   var r1=JSON.stringify(result);
+      r1=result;
          console.log(r1);
 });
 });
