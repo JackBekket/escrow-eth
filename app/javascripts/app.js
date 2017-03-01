@@ -14,9 +14,9 @@
 
 
 
-//import "../../semantic/dist/semantic.css"
+import "../../semantic/dist/semantic.css"
 //import "../../semantic/dist/semantic.scss"
-//import "../../semantic/dist/semantic.js"
+import "../../semantic/dist/semantic.js"
 //import "../../semantic/tasks/build/javascript.js"
 
 //require ("../../semantic/tasks/build/assets.js")
