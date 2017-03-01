@@ -5,7 +5,7 @@ var webpack = require('webpack');
 var FlowBabelWebpackPlugin = require('flow-babel-webpack-plugin');
 
 module.exports = {
-  entry:  ['jquery','./app/javascripts/app.js'],
+  entry:  ['./app/javascripts/app.js'],
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'app.js'
@@ -22,9 +22,10 @@ module.exports = {
    },
   plugins: [
     new webpack.ProvidePlugin({
-   $: "jquery",
-   jQuery: "jquery"
- }),
+  $: 'jquery',
+  jQuery: 'jquery'
+})
+,
     // Copy our app's index.html to the build folder.
     new CopyWebpackPlugin([
       { from: './app/index.html', to: "index.html" }
