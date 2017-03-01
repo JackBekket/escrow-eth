@@ -17,8 +17,8 @@ module.exports = {
     //  extensions: ['', '.js', '.jsx'],
     },
     node: {
-    fs: "empty"
-  //  module: "empty"
+    fs: "empty",
+    module: "empty"
    },
   plugins: [
     new webpack.ProvidePlugin({
@@ -43,7 +43,6 @@ module.exports = {
   ],
     loaders: [
       { test: /\.json$/, use: 'json-loader' },
-       { test: require.resolve("jquery"), loader: "expose?$!expose?jQuery" },
       {
         test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         // Limiting the size of the woff fonts breaks font-awesome ONLY for the extract text plugin
