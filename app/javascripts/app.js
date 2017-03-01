@@ -12,7 +12,8 @@
 //import "../../old/public/js/semantic.min.js"
 // import "../../old/public/css/semantic.min.css"
 
-
+import "../../dist/css/flat-ui.min.css"
+import "../../dist/js/flat-ui.min.js"
 
 //import "../../semantic/dist/semantic.css"
 //import "../../semantic/dist/semantic.scss"
