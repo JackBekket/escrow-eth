@@ -35,10 +35,28 @@ module.exports = {
       {
        test: /\.css$/,
        use: [ 'style-loader', 'css-loader' ]
-      }
-    ],
+     },
+     {
+     test: /\.scss$/,
+    use: [{
+      loader: 'style-loader',
+    }, {
+      loader: 'css-loader',
+    }, {
+      loader: 'sass-loader',
+    }]
+  }
+  ],
     loaders: [
       { test: /\.json$/, use: 'json-loader' },
+      {
+        test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        // Limiting the size of the woff fonts breaks font-awesome ONLY for the extract text plugin
+        // loader: "url?limit=10000"
+        loader: "url"
+      },
+      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
+  { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" },
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
