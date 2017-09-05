@@ -1,4 +1,4 @@
-pragma solidity ^0.4.2;
+pragma solidity ^0.4.11;
 
 
 /**
@@ -101,13 +101,13 @@ uint16 constant internal Canceled = 2;
 //--MODIFIERS---------------------------
   modifier onlyOwner {
       if (msg.sender != seller)
-        throw;
+        revert();
       _;
   }
 
   modifier onlyArbiter {
       if (msg.sender != arbiter)
-        throw;
+        revert();
       _;
   }
 //---------------------------------------
@@ -167,11 +167,11 @@ function EscrowAdvansed(address _arbiter, uint _freezePeriod, uint _feePromille,
 // PITFALL - probably need to change addr.call to addr.send ... ?
   function safeSend(address addr, uint value) internal {
 
-      if(atomicLock) throw;
+      if(atomicLock) revert();
       atomicLock = true;
       if (!(addr.call.gas(safeGas).value(value)())) {
           atomicLock = false;
-          throw;
+          revert();
       }
       atomicLock = false;
   }
@@ -408,23 +408,23 @@ function start(uint _lockId, string _dataInfo, uint _version) payable {
 
     //reject money transfers for bad status
 
-    if(status != Available) throw;
+    if(status != Available) revert();
 
-    if(feePromille > 1000) throw;
-    if(rewardPromille > 1000) throw;
-    if((feePromille + rewardPromille) > 1000) throw;
+    if(feePromille > 1000) revert();
+    if(rewardPromille > 1000) revert();
+    if((feePromille + rewardPromille) > 1000) revert();
 
     //create default EscrowInfo struct or access existing
     EscrowInfo info = escrows[_lockId];
 
     //lock only once for a given id
-    if(info.lockedFunds > 0) throw;
+    if(info.lockedFunds > 0) revert();
 
     //lock funds
 
     uint fee = (msg.value * feePromille) / 1000;
     //limit fees
-    if(fee > msg.value) throw;
+    if(fee > msg.value) revert();
 
     uint funds = (msg.value - fee);
     feeFunds += fee;
@@ -453,7 +453,7 @@ function accept(uint _lockId, string _dataInfo, uint _version) onlyOwner {
 
     EscrowInfo info = escrows[_lockId];
 
-// Here is could be rule for auto-accept or auto-throw
+// Here is could be rule for auto-accept or auto-revert()
 
 
 //Accept order to event log
@@ -463,7 +463,7 @@ function accept(uint _lockId, string _dataInfo, uint _version) onlyOwner {
 function done(uint _lockId, string _dataInfo, uint _version) onlyOwner{
 
   EscrowInfo info = escrows[_lockId];
-  
+
   LogEvent(_lockId, _dataInfo, _version, Done, msg.sender, info.lockedFunds);
 }
 
@@ -472,7 +472,7 @@ function reject(uint _lockId, string _dataInfo, uint _version) onlyOwner {
 
     EscrowInfo info = escrows[_lockId];
 
-    // Here is could be rule for auto-reject or auto-throw
+    // Here is could be rule for auto-reject or auto-revert()
 
 
 
@@ -505,7 +505,7 @@ function stop() {
 
 //fallback function deny any deposits to contract
 function () {
-    throw;
+    revert();
 }
 
 

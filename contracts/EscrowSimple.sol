@@ -1,4 +1,4 @@
-pragma solidity ^0.4.2;
+pragma solidity ^0.4.11;
 
 /**
 
@@ -34,14 +34,14 @@ contract EscrowSimple {
   //make payment to seller
   function payoutToSeller() {
     if(msg.sender == buyer || msg.sender == arbiter) {
-    if(!seller.send(this.balance)) throw;
+    if(!seller.send(this.balance)) revert();
     }
   }
 
   //refund transaction
   function refundToBuyer() {
     if(msg.sender == seller || msg.sender == arbiter) {
-    if(!buyer.send(this.balance)) throw;
+    if(!buyer.send(this.balance)) revert();
     }
   }
 

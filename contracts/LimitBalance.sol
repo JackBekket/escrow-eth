@@ -1,10 +1,10 @@
-pragma solidity ^0.4.4;
+pragma solidity ^0.4.11;
 
 
 /**
  * LimitBalance
  * Simple contract to limit the balance of child contract.
- * Note this doesn't prevent other contracts to send funds 
+ * Note this doesn't prevent other contracts to send funds
  * by using selfdestruct(address);
  * See: https://github.com/ConsenSys/smart-contract-best-practices#remember-that-ether-can-be-forcibly-sent-to-an-account
  */
@@ -16,11 +16,11 @@ contract LimitBalance {
     limit = _limit;
   }
 
-  modifier limitedPayable() { 
+  modifier limitedPayable() {
     if (this.balance <= limit)
       _;
     else
-      throw;    
+      revert();
   }
 
 }
