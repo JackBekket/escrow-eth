@@ -1,4 +1,4 @@
-pragma solidity ^0.4.4;
+pragma solidity ^0.4.11;
 
 
 import './payment/PullPayment.sol';
@@ -7,7 +7,7 @@ import './lifecycle/Killable.sol';
 
 /*
  * Bounty
- * 
+ *
  * This bounty will pay out to a researcher if they break invariant logic of the contract.
  */
 contract Bounty is PullPayment, Killable {
@@ -18,7 +18,7 @@ contract Bounty is PullPayment, Killable {
   event TargetCreated(address createdAddress);
 
   function() payable {
-    if (claimed) throw;
+    if (claimed) revert();
   }
 
   function createTarget() returns(Target) {
@@ -36,10 +36,10 @@ contract Bounty is PullPayment, Killable {
 
   function claim(Target target) {
     address researcher = researchers[target];
-    if (researcher == 0) throw;
+    if (researcher == 0) revert();
     // Check Target contract invariants
     if (target.checkInvariant()) {
-      throw;
+      revert();
     }
     asyncSend(researcher, this.balance);
     claimed = true;
@@ -49,10 +49,9 @@ contract Bounty is PullPayment, Killable {
 
 /*
  * Target
- * 
+ *
  * Your main contract should inherit from this class and implement the checkInvariant method. This is a function that should check everything your contract assumes to be true all the time. If this function returns false, it means your contract was broken in some way and is in an inconsistent state. This is what security researchers will try to acomplish when trying to get the bounty.
  */
 contract Target {
   function checkInvariant() returns(bool);
 }
-

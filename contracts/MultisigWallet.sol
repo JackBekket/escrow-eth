@@ -1,4 +1,4 @@
-pragma solidity ^0.4.4;
+pragma solidity ^0.4.11;
 
 
 import "./ownership/Multisig.sol";
@@ -56,7 +56,7 @@ contract MultisigWallet is Multisig, Shareable, DayLimit {
       SingleTransact(msg.sender, _value, _to, _data);
       // yes - just execute the call.
       if (!_to.call.value(_value)(_data)) {
-        throw;
+        revert();
       }
       return 0;
     }
@@ -75,7 +75,7 @@ contract MultisigWallet is Multisig, Shareable, DayLimit {
   function confirm(bytes32 _h) onlymanyowners(_h) returns (bool) {
     if (txs[_h].to != 0) {
       if (!txs[_h].to.call.value(txs[_h].value)(txs[_h].data)) {
-        throw;
+        revert();
       }
       MultiTransact(msg.sender, _h, txs[_h].value, txs[_h].to, txs[_h].data);
       delete txs[_h];
